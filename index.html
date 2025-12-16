@@ -14,11 +14,10 @@
     :root{
       --bg: #ffffff;
       --card: #ffffff;
-      --muted: #6b7280; /* gray-500 */
-      --text: #0f172a;  /* slate-900 */
-      --accent: #0ea5ff; /* cyan-500 */
-      --accent-2: #7c3aed; /* violet */
-      --glass: rgba(15,23,42,0.04);
+      --muted: #6b7280;
+      --text: #0f172a;
+      --accent: #0ea5ff;
+      --accent-2: #7c3aed;
       --radius:14px;
       --max-width:1100px;
       --ease:cubic-bezier(.2,.9,.3,1);
@@ -37,6 +36,7 @@
       -moz-osx-font-smoothing:grayscale;
       line-height:1.5;
       -webkit-tap-highlight-color: transparent;
+      overflow-x:hidden;
     }
 
     .container{max-width:var(--max-width);margin:0 auto;padding:2rem}
@@ -76,28 +76,24 @@
     }
     @media (max-width:980px){ .hero{grid-template-columns:1fr; padding:3.5rem 0} }
 
+    /* ensure hero content sits above decorative shapes */
+    .hero-left{position:relative; z-index:6}
     .hero-left h2{
-      margin:0 0 .5rem 0;font-size:clamp(26px,6vw,44px);line-height:1.02;
+      margin:0 0 .6rem 0;font-size:clamp(26px,6vw,44px);line-height:1.02;
       letter-spacing:-0.01em;
       font-weight:800;
       color:var(--text);
       opacity:0; transform:translateY(14px);
       transition: all .9s var(--ease);
+      position:relative;
+      z-index:6;
     }
-    .hero-left p{color:var(--muted);margin:.6rem 0 1.2rem 0;max-width:64ch;opacity:0;transform:translateY(12px);transition:all .9s var(--ease) .08s}
+    .hero-left p{color:var(--muted);margin:.9rem 0 1.3rem 0;max-width:64ch;opacity:0;transform:translateY(12px);transition:all .9s var(--ease) .08s;position:relative;z-index:6}
 
     .actions{display:flex;gap:1rem;align-items:center}
-    .btn-outline{
-      border:1px solid rgba(15,23,42,0.06);
-      padding:10px 14px;border-radius:10px;color:var(--text);background:transparent;font-weight:700;
-      transition:all .18s var(--ease)
-    }
+    .btn-outline{border:1px solid rgba(15,23,42,0.06);padding:10px 14px;border-radius:10px;color:var(--text);background:transparent;font-weight:700;transition:all .18s var(--ease)}
     .btn-outline:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
-    .btn-primary{
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      padding:10px 14px;border-radius:10px;color:white;border:0;font-weight:700;
-      box-shadow:var(--shadow-lg)
-    }
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:10px;color:white;border:0;font-weight:700;box-shadow:var(--shadow-lg)}
 
     /* Card on right */
     .profile-card{
@@ -106,6 +102,7 @@
       border-radius:var(--radius);padding:1.6rem;backdrop-filter: blur(6px);
       box-shadow: var(--shadow-lg);
       transform:translateY(18px);opacity:0;transition:all .9s var(--ease) .12s;
+      position:relative; z-index:6;
     }
     .avatar{width:90px;height:90px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#34d399);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:20px}
     .profile-meta{display:flex;align-items:center;gap:1rem}
@@ -122,9 +119,10 @@
       border:1px solid rgba(15,23,42,0.04);
       padding:1.6rem;border-radius:12px;transition:transform .25s var(--ease), box-shadow .25s var(--ease);
       transform:translateY(8px);opacity:0;
+      color:var(--text);
     }
     .card:hover{transform:translateY(-8px);box-shadow:var(--shadow-sm)}
-    .card h3{margin:0 0 .6rem 0}
+    .card h3{margin:0 0 .6rem 0;color:var(--text)}
     .card p{color:var(--muted);margin:0}
 
     /* Request form */
@@ -154,7 +152,7 @@
     .social a:hover{color:var(--text);background:rgba(14,165,255,0.06);transform:translateY(-3px)}
 
     /* floating light shapes (subtle) */
-    .shapes{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:visible}
+    .shapes{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:visible}
     .shape{
       position:absolute;border-radius:50%;opacity:0.8;mix-blend-mode:screen;
       animation: floatLight 9s ease-in-out infinite;
@@ -165,20 +163,39 @@
     .s3{width:160px;height:160px;background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(236,72,153,0.06));left:60%;top:18%;opacity:0.6;animation-duration:13s;animation-delay:2s}
     @keyframes floatLight{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.03)}100%{transform:translateY(0) scale(1)}}
 
+    /* pebble animation (subtle translucent circles on white BG) */
+    .pebbles{position:absolute;inset:0;pointer-events:none;z-index:3;overflow:visible}
+    .pebble{
+      position:absolute;border-radius:999px;background:rgba(15,23,42,0.04);
+      width:var(--size, 40px);height:var(--size, 40px);opacity:0.9;filter:blur(6px);
+      animation: drift var(--dur, 9s) linear infinite;
+      transform-origin:center;
+    }
+    .pebble.small{--size:18px;--dur:8s;opacity:0.55}
+    .pebble.med{--size:32px;--dur:10s;opacity:0.6}
+    .pebble.big{--size:64px;--dur:14s;opacity:0.28}
+    /* different starting positions and delays via inline styles are used in markup */
+
+    @keyframes drift{
+      0%{transform:translate3d(0,0,0) scale(1); opacity:inherit}
+      25%{transform:translate3d(18px,-22px,0) scale(1.03)}
+      50%{transform:translate3d(-6px,-36px,0) scale(0.98)}
+      75%{transform:translate3d(-20px,10px,0) scale(1.02)}
+      100%{transform:translate3d(0,0,0) scale(1)}
+    }
+
     /* reveal animations controlled by JS */
-    .reveal{transform:translateY(18px);opacity:0;transition:all .8s var(--ease)}
+    .reveal{transform:translateY(18px);opacity:0;transition:all .64s var(--ease)}
     .reveal.is-visible{transform:none;opacity:1}
 
-    /* hero rotator / typing */
+    /* hero typed / rotator */
     .intro{
       display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap;
       line-height:1.02;
     }
-    .intro .name{
-      font-weight:800;color:var(--text);font-size:clamp(18px,4vw,34px);
-    }
-    .intro .typed{color:var(--accent);font-weight:700;min-width:10ch;height:1.1em;display:inline-block;overflow:hidden;vertical-align:bottom}
-    .typed .cursor{display:inline-block;background:var(--text);width:2px;height:1.15em;margin-left:6px;animation:blink 1s step-start infinite}
+    .intro .name{font-weight:800;color:var(--text);font-size:clamp(18px,4vw,34px)}
+    .typed{color:var(--accent);font-weight:700;min-width:10ch;height:1.06em;display:inline-block;vertical-align:bottom}
+    .typed .cursor{display:inline-block;background:var(--text);width:2px;height:1.06em;margin-left:6px;animation:blink 1s step-start infinite}
     @keyframes blink{50%{opacity:0}}
 
     /* profile full panel */
@@ -187,7 +204,7 @@
       background:linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,1));
       border:1px solid rgba(15,23,42,0.03);
       padding:1rem;border-radius:12px;display:none;
-      box-shadow:var(--shadow-sm);
+      box-shadow:var(--shadow-sm);position:relative;z-index:6;
     }
     .profile-full.open{display:block;animation:fadeIn .28s ease both}
     @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -207,6 +224,7 @@
       .header-bar{padding:0.5rem 0.8rem}
       .container{padding:1.1rem}
       .hero{gap:1rem}
+      .profile-card{order:2}
     }
   </style>
 </head>
@@ -227,10 +245,6 @@
         <a href="#request" class="underline">Request</a>
         <a class="cta" href="#request">Let's talk</a>
       </nav>
-
-      <div class="hamburger" aria-hidden="true" style="display:none">
-        <button id="hambBtn" style="background:transparent;border:0;color:var(--muted);font-weight:800">☰</button>
-      </div>
     </div>
   </header>
 
@@ -238,7 +252,7 @@
     <section class="hero" aria-label="Intro">
       <div class="hero-left">
         <h2 class="reveal">
-          <div class="intro">
+          <div class="intro" aria-hidden="false">
             <span class="name">Hi — I'm <strong style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">Prashanta Subedi</strong></span>
             <span class="typed" aria-hidden="true" id="typedText"></span>
           </div>
@@ -293,7 +307,7 @@
         </div>
       </div>
 
-      <aside class="profile-card" aria-label="Profile card">
+      <aside class="profile-card reveal" aria-label="Profile card">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div style="display:flex;gap:12px;align-items:center" class="profile-meta">
             <div class="avatar" aria-hidden="true">PS</div>
@@ -320,10 +334,21 @@
         </div>
       </aside>
 
+      <!-- subtle decorative shapes (behind) -->
       <div class="shapes" aria-hidden="true">
         <div class="shape s1"></div>
         <div class="shape s2"></div>
         <div class="shape s3"></div>
+      </div>
+
+      <!-- pebble floating circles (transparent look on white) -->
+      <div class="pebbles" aria-hidden="true">
+        <div class="pebble big" style="left:6%; top:22%; animation-delay:0s;"></div>
+        <div class="pebble med" style="left:22%; top:8%; animation-delay:1.4s;"></div>
+        <div class="pebble small" style="left:42%; top:34%; animation-delay:2.1s;"></div>
+        <div class="pebble med" style="left:65%; top:6%; animation-delay:0.6s;"></div>
+        <div class="pebble small" style="left:78%; top:28%; animation-delay:3.2s;"></div>
+        <div class="pebble big" style="left:88%; top:52%; animation-delay:1.8s;"></div>
       </div>
     </section>
 
@@ -335,15 +360,15 @@
     <section id="services" class="services reveal">
       <h2>Services</h2>
       <div class="cards">
-        <div class="card" style="transition-delay:.06s">
+        <div class="card reveal" style="transition-delay:.06s">
           <h3>Website Development</h3>
           <p>Responsive, accessible and SEO-friendly websites tuned for speed and conversion.</p>
         </div>
-        <div class="card" style="transition-delay:.12s">
+        <div class="card reveal" style="transition-delay:.12s">
           <h3>Mobile Apps</h3>
           <p>Cross-platform apps using React Native or native tooling — smooth, performant UX.</p>
         </div>
-        <div class="card" style="transition-delay:.18s">
+        <div class="card reveal" style="transition-delay:.18s">
           <h3>Product & Landing Pages</h3>
           <p>Professional portfolios and product landing pages with polished interactions.</p>
         </div>
@@ -410,39 +435,23 @@
   <div id="toast" style="position:fixed;right:20px;bottom:20px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:12px 18px;border-radius:12px;box-shadow:var(--shadow-lg);z-index:80;opacity:0;transform:translateY(8px);transition:all .28s var(--ease)">Message sent — I'll get back to you soon!</div>
 
   <script>
-    // reveal on scroll
+    // reveal on scroll (clean, reliable)
     (function(){
       const observer = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            e.target.classList.add('is-visible');
-            e.target.classList.add('reveal--shown');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible');
-            e.target.classList.add('is-visible'); // harmless duplicate
-            e.target.classList.add('is-visible');
-            e.target.style.opacity = 1;
-            e.target.style.transform = 'none';
-            observer.unobserve(e.target);
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('is-visible');
+            entry.target.classList.add('reveal--shown');
+            entry.target.classList.add('is-visible'); // ensures .reveal.is-visible rules apply
+            entry.target.classList.add('is-visible'); // harmless duplicates don't matter
+            observer.unobserve(entry.target);
           }
         });
       },{threshold:0.12});
-      document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     })();
 
-    // hero typed rotator (lightweight)
+    // hero typed rotator (lightweight, stable)
     (function(){
       const words = [
         'Full‑stack developer',
@@ -452,45 +461,37 @@
         'Design → Code → Ship'
       ];
       const el = document.getElementById('typedText');
+      if(!el) return;
       const cursor = document.createElement('span');
       cursor.className = 'cursor';
       cursor.style.display = 'inline-block';
       cursor.style.width = '2px';
-      cursor.style.height = '1.15em';
+      cursor.style.height = '1.06em';
       cursor.style.background = 'var(--text)';
       cursor.style.marginLeft = '6px';
       cursor.style.animation = 'blink 1s step-start infinite';
-      if(el) el.appendChild(cursor);
+      el.appendChild(cursor);
 
-      let w = 0, i = 0, forward = true, offset = 0, skip = 0, skipWait = 18;
-      function type(){
-        if(!el) return;
-        el.style.minWidth = '10ch';
+      let w = 0, offset = 0, forward = true, skip = 0, skipWait = 16;
+
+      function tick(){
+        const word = words[w];
         if(forward){
-          if(offset >= words[w].length){
+          if(offset < word.length) offset++;
+          else {
             skip++;
-            if(skip === skipWait){
-              forward = false;
-              skip = 0;
-            }
-          } else {
-            offset++;
+            if(skip > skipWait){ forward = false; skip = 0; }
           }
         } else {
-          if(offset === 0){
-            forward = true;
-            w = (w + 1) % words.length;
-          } else {
-            offset--;
-          }
+          if(offset > 0) offset--;
+          else { forward = true; w = (w + 1) % words.length; }
         }
-        const part = words[w].substr(0, offset);
-        el.firstChild && el.firstChild.remove ? null : null;
-        el.innerText = part;
-        el.appendChild(cursor);
-        setTimeout(type, forward ? 70 : 40);
+        // update visible text (keep cursor appended)
+        el.childNodes.forEach(n => { if(n.nodeType === Node.TEXT_NODE) n.remove(); });
+        el.insertBefore(document.createTextNode(word.substr(0, offset)), cursor);
+        setTimeout(tick, forward ? 70 : 40);
       }
-      setTimeout(type, 600);
+      setTimeout(tick, 600);
     })();
 
     // profile toggle
@@ -549,17 +550,17 @@
       }
     })();
 
-    // subtle parallax for shapes on pointer move (disabled on touch)
+    // subtle parallax for decorative shapes & pebbles on pointer move (disabled on touch)
     (function(){
       const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
       if(isTouch) return;
-      const shapes = document.querySelectorAll('.shape');
-      if(!shapes.length) return;
+      const movers = document.querySelectorAll('.shape, .pebble');
+      if(!movers.length) return;
       window.addEventListener('mousemove', (e)=>{
         const x = (e.clientX / window.innerWidth) - 0.5;
         const y = (e.clientY / window.innerHeight) - 0.5;
-        shapes.forEach((s,i)=>{
-          const depth = (i+1) * 8;
+        movers.forEach((s,i)=>{
+          const depth = (i % 5 + 1) * 6;
           s.style.transform = `translate3d(${x * depth}px, ${y * depth}px, 0)`;
         });
       });
