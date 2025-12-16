@@ -8,20 +8,22 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <!-- Theme color -->
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#ffffff">
 
   <style>
     :root{
-      --bg:#0f172a;
-      --card:#0b1220;
-      --muted:#94a3b8;
-      --accent:#7c3aed;
-      --accent-2:#06b6d4;
-      --glass: rgba(255,255,255,0.04);
+      --bg: #ffffff;
+      --card: #ffffff;
+      --muted: #6b7280; /* gray-500 */
+      --text: #0f172a;  /* slate-900 */
+      --accent: #0ea5ff; /* cyan-500 */
+      --accent-2: #7c3aed; /* violet */
+      --glass: rgba(15,23,42,0.04);
       --radius:14px;
       --max-width:1100px;
       --ease:cubic-bezier(.2,.9,.3,1);
+      --shadow-lg: 0 10px 30px rgba(15,23,42,0.06);
+      --shadow-sm: 0 6px 20px rgba(15,23,42,0.04);
     }
 
     *{box-sizing:border-box}
@@ -29,213 +31,183 @@
     body{
       margin:0;
       font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1000px 600px at 10% 10%, rgba(124,58,237,0.12), transparent 6%),
-                  radial-gradient(800px 500px at 90% 90%, rgba(6,182,212,0.06), transparent 6%),
-                  var(--bg);
-      color: #e6eef8;
+      background: linear-gradient(180deg, #fbfdff 0%, #ffffff 100%);
+      color:var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-      overflow-x:hidden;
+      line-height:1.5;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .container{max-width:var(--max-width);margin:0 auto;padding:2rem}
 
     header{
       position:sticky;top:0;z-index:60;
+      background: rgba(255,255,255,0.7);
       backdrop-filter: blur(6px);
-      border-bottom:1px solid rgba(255,255,255,0.03);
-      background: linear-gradient(180deg, rgba(8,10,19,0.45), rgba(8,10,19,0.25));
+      border-bottom:1px solid rgba(15,23,42,0.04);
     }
 
     .header-bar{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1rem}
-    .brand{display:flex;align-items:center;gap:.9rem}
+    .brand{display:flex;align-items:center;gap:0.9rem}
     .logo{
-      width:44px;height:44px;border-radius:10px;
+      width:48px;height:48px;border-radius:10px;
       background:linear-gradient(135deg,var(--accent),var(--accent-2));
       display:flex;align-items:center;justify-content:center;font-weight:800;color:white;
-      box-shadow:0 6px 20px rgba(7,9,20,0.6), 0 2px 6px rgba(124,58,237,0.08);
-      transform:translateZ(0);
+      box-shadow:var(--shadow-sm);
+      font-size:0.95rem;
     }
     .brand h1{font-size:1rem;margin:0}
     nav{display:flex;gap:1rem;align-items:center}
-    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;transition:all .25s var(--ease);font-weight:600}
-    nav a:hover{color:#fff;background:rgba(255,255,255,0.03);transform:translateY(-2px)}
+    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;transition:all .2s var(--ease);font-weight:600}
+    nav a:hover{color:var(--text);background:rgba(14,165,255,0.06);transform:translateY(-2px)}
     .cta{
-      background:linear-gradient(90deg,var(--accent),#4f46e5);
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
       padding:8px 14px;border-radius:10px;color:white;font-weight:700;
-      box-shadow: 0 8px 30px rgba(99,102,241,0.12);border:0;cursor:pointer;
-      transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+      box-shadow:var(--shadow-lg);border:0;cursor:pointer;
+      transition: transform .18s var(--ease), box-shadow .18s var(--ease);
     }
-    .cta:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(99,102,241,0.16)}
+    .cta:hover{transform:translateY(-3px);box-shadow:0 20px 40px rgba(124,58,237,0.08)}
 
     /* HERO */
     .hero{
-      padding:6rem 0 4rem; position:relative; overflow:visible;
+      padding:6rem 0 3rem; position:relative; overflow:visible;
       display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center;
     }
-    @media (max-width:940px){ .hero{grid-template-columns:1fr; padding:3.5rem 0} }
+    @media (max-width:980px){ .hero{grid-template-columns:1fr; padding:3.5rem 0} }
 
     .hero-left h2{
-      margin:0 0 .6rem 0;font-size:clamp(28px,5vw,48px);line-height:1.01;
-      letter-spacing:-0.02em;
-      filter:drop-shadow(0 8px 30px rgba(10,12,25,0.7));
-      transform:translateY(12px);
-      opacity:0; transition: all .9s var(--ease);
+      margin:0 0 .5rem 0;font-size:clamp(26px,6vw,44px);line-height:1.02;
+      letter-spacing:-0.01em;
+      font-weight:800;
+      color:var(--text);
+      opacity:0; transform:translateY(14px);
+      transition: all .9s var(--ease);
     }
-    .hero-left p{color:var(--muted);margin:.6rem 0 1.4rem 0;max-width:60ch;opacity:0;transform:translateY(12px);transition:all .9s var(--ease) .12s}
+    .hero-left p{color:var(--muted);margin:.6rem 0 1.2rem 0;max-width:64ch;opacity:0;transform:translateY(12px);transition:all .9s var(--ease) .08s}
 
-    .hero-left .actions{display:flex;gap:1rem;align-items:center}
-    .btn-outline{border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--muted);background:transparent;font-weight:700}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:10px;color:white;border:0;font-weight:700;box-shadow:0 8px 30px rgba(99,102,241,0.12)}
+    .actions{display:flex;gap:1rem;align-items:center}
+    .btn-outline{
+      border:1px solid rgba(15,23,42,0.06);
+      padding:10px 14px;border-radius:10px;color:var(--text);background:transparent;font-weight:700;
+      transition:all .18s var(--ease)
+    }
+    .btn-outline:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+    .btn-primary{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      padding:10px 14px;border-radius:10px;color:white;border:0;font-weight:700;
+      box-shadow:var(--shadow-lg)
+    }
 
     /* Card on right */
     .profile-card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.04);
-      border-radius:var(--radius);padding:1.6rem;backdrop-filter: blur(8px);
-      box-shadow: 0 10px 50px rgba(2,6,23,0.6);
-      transform:translateY(18px);opacity:0;transition:all .9s var(--ease) .2s;
+      background:linear-gradient(180deg, rgba(250,250,252,1), rgba(255,255,255,1));
+      border:1px solid rgba(15,23,42,0.04);
+      border-radius:var(--radius);padding:1.6rem;backdrop-filter: blur(6px);
+      box-shadow: var(--shadow-lg);
+      transform:translateY(18px);opacity:0;transition:all .9s var(--ease) .12s;
     }
-    .avatar{width:86px;height:86px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#6ee7b7);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:20px}
+    .avatar{width:90px;height:90px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#34d399);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:20px}
     .profile-meta{display:flex;align-items:center;gap:1rem}
-    .tag{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:999px;color:var(--muted);font-weight:700}
+    .tag{display:inline-block;padding:6px 10px;background:rgba(14,165,255,0.06);border-radius:999px;color:var(--accent-2);font-weight:700}
 
     /* Sections */
-    section{padding:4rem 0}
-    h2{margin:0 0 1rem 0;font-size:1.4rem}
+    section{padding:3rem 0}
+    h2{margin:0 0 1rem 0;font-size:1.25rem}
     .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
     @media(max-width:940px){ .cards{grid-template-columns:repeat(1,1fr)} }
 
     .card{
-      background:var(--card);
-      border:1px solid rgba(255,255,255,0.03);
-      padding:1.6rem;border-radius:12px;transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+      background:#fff;
+      border:1px solid rgba(15,23,42,0.04);
+      padding:1.6rem;border-radius:12px;transition:transform .25s var(--ease), box-shadow .25s var(--ease);
       transform:translateY(8px);opacity:0;
     }
-    .card:hover{transform:translateY(-8px) rotate(-0.6deg);box-shadow:0 18px 40px rgba(2,6,23,0.6)}
+    .card:hover{transform:translateY(-8px);box-shadow:var(--shadow-sm)}
     .card h3{margin:0 0 .6rem 0}
     .card p{color:var(--muted);margin:0}
 
     /* Request form */
     .form{
       display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:12px;padding:1rem;border:1px solid rgba(255,255,255,0.03);
+      background:linear-gradient(180deg, rgba(255,255,255,1), rgba(250,250,252,1));
+      border-radius:12px;padding:1rem;border:1px solid rgba(15,23,42,0.04);
     }
     @media(max-width:760px){ .form{grid-template-columns:1fr} }
 
     .field{position:relative}
+    .field label{display:block;margin-bottom:6px;color:var(--muted);font-size:.9rem}
     .field input,.field textarea,.field select{
-      width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
-      background:transparent;color:inherit;outline:none;font-weight:600;
+      width:100%;padding:12px;border-radius:10px;border:1px solid rgba(15,23,42,0.06);
+      background:transparent;color:var(--text);outline:none;font-weight:600;
       transition:box-shadow .15s ease, transform .12s var(--ease);
     }
     .field textarea{min-height:120px;resize:vertical}
-    .field input:focus,.field textarea:focus,.field select:focus{box-shadow:0 8px 28px rgba(0,0,0,0.6);transform:translateY(-2px)}
+    .field input:focus,.field textarea:focus,.field select:focus{box-shadow:0 8px 28px rgba(14,165,255,0.06);transform:translateY(-2px)}
 
     .submit-wrap{display:flex;align-items:center;gap:12px}
     .hint{color:var(--muted);font-size:.9rem}
 
     /* footer */
-    footer{padding:2.4rem 0;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted)}
-    .social a{color:var(--muted);text-decoration:none;margin-right:10px;padding:6px;border-radius:8px;transition:all .18s}
-    .social a:hover{color:white;background:rgba(255,255,255,0.03);transform:translateY(-3px)}
+    footer{padding:2.4rem 0;border-top:1px solid rgba(15,23,42,0.03);color:var(--muted)}
+    .social a{color:var(--muted);text-decoration:none;margin-right:10px;padding:6px;border-radius:8px;transition:all .14s}
+    .social a:hover{color:var(--text);background:rgba(14,165,255,0.06);transform:translateY(-3px)}
 
-    /* animated background blobs */
-    .blobs{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:visible}
-    .blob{
-      position:absolute;border-radius:50%;filter:blur(80px);opacity:0.9;mix-blend-mode:screen;
-      transform:translateZ(0);
-      animation: float 8s ease-in-out infinite;
+    /* floating light shapes (subtle) */
+    .shapes{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:visible}
+    .shape{
+      position:absolute;border-radius:50%;opacity:0.8;mix-blend-mode:screen;
+      animation: floatLight 9s ease-in-out infinite;
+      filter:blur(18px);
     }
-    .blob.b1{width:360px;height:360px;background:linear-gradient(135deg,var(--accent),#60a5fa);left:-80px;top:-60px;animation-delay:0s}
-    .blob.b2{width:260px;height:260px;background:linear-gradient(135deg,var(--accent-2),#34d399);right:-40px;bottom:-40px;animation-duration:10s;animation-delay:1s}
-    .blob.b3{width:160px;height:160px;background:linear-gradient(135deg,#f97316,#fb7185);left:60%;top:20%;opacity:0.6;animation-duration:12s;animation-delay:2s}
-    @keyframes float{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-24px) scale(1.04)}100%{transform:translateY(0) scale(1)}}
+    .s1{width:420px;height:420px;background:linear-gradient(135deg,rgba(14,165,255,0.12),rgba(124,58,237,0.06));left:-120px;top:-80px;animation-delay:0s}
+    .s2{width:260px;height:260px;background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(14,165,255,0.06));right:-60px;bottom:-60px;animation-duration:11s;animation-delay:1s}
+    .s3{width:160px;height:160px;background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(236,72,153,0.06));left:60%;top:18%;opacity:0.6;animation-duration:13s;animation-delay:2s}
+    @keyframes floatLight{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.03)}100%{transform:translateY(0) scale(1)}}
 
     /* reveal animations controlled by JS */
     .reveal{transform:translateY(18px);opacity:0;transition:all .8s var(--ease)}
     .reveal.is-visible{transform:none;opacity:1}
 
-    /* subtle micro interaction for link underline */
-    a.underline{position:relative;color:inherit;text-decoration:none}
-    a.underline::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .28s var(--ease)}
-    a.underline:hover::after{width:100%}
-
-    /* small helpers */
-    .muted{color:var(--muted)}
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    @media(max-width:760px){ .grid-2{grid-template-columns:1fr} }
-
-    /* hero animated pieces when loaded */
-    .loaded .hero-left h2,
-    .loaded .hero-left p,
-    .loaded .profile-card{opacity:1;transform:none}
-
-    /* small mobile nav */
-    .hamburger{display:none;cursor:pointer}
-    @media(max-width:760px){nav{display:none}.hamburger{display:block}}
-    .mobile-nav{position:fixed;inset:64px 18px auto auto;background:rgba(7,9,15,0.95);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:none}
-    .mobile-nav.open{display:block}
-
-    /* success toast */
-    .toast{
-      position:fixed;right:20px;bottom:20px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:12px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.6);z-index:80;opacity:0;transform:translateY(8px);transition:all .28s var(--ease)
+    /* hero rotator / typing */
+    .intro{
+      display:flex;gap:.8rem;align-items:baseline;flex-wrap:wrap;
+      line-height:1.02;
     }
-    .toast.show{opacity:1;transform:none}
+    .intro .name{
+      font-weight:800;color:var(--text);font-size:clamp(18px,4vw,34px);
+    }
+    .intro .typed{color:var(--accent);font-weight:700;min-width:10ch;height:1.1em;display:inline-block;overflow:hidden;vertical-align:bottom}
+    .typed .cursor{display:inline-block;background:var(--text);width:2px;height:1.15em;margin-left:6px;animation:blink 1s step-start infinite}
+    @keyframes blink{50%{opacity:0}}
 
-    /* Typing / rotator in hero */
-    .intro-line{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
-    .name{
-      font-weight:900;
-      font-size:clamp(20px,4vw,36px);
-      letter-spacing:-0.01em;
-      display:inline-block;
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-    .rotator{
-      color:var(--accent-2);
-      font-weight:700;
-      white-space:nowrap;
-      overflow:hidden;
-      display:inline-block;
-      vertical-align:bottom;
-    }
-    .rotator .word{
-      display:inline-block;
-      transform:translateY(0);
-      animation: rotateWords 8s linear infinite 0s;
-    }
-    @keyframes rotateWords{
-      0%{transform:translateY(0)}
-      20%{transform:translateY(-100%)}
-      40%{transform:translateY(-200%)}
-      60%{transform:translateY(-300%)}
-      80%{transform:translateY(-400%)}
-      100%{transform:translateY(0)}
-    }
-    .rotator .word span{display:block;height:1.1em}
-
-    /* full profile panel */
+    /* profile full panel */
     .profile-full{
       margin-top:1rem;
-      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      border:1px solid rgba(255,255,255,0.03);
+      background:linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,1));
+      border:1px solid rgba(15,23,42,0.03);
       padding:1rem;border-radius:12px;display:none;
+      box-shadow:var(--shadow-sm);
     }
-    .profile-full.open{display:block;animation:fadeIn .36s ease both}
+    .profile-full.open{display:block;animation:fadeIn .28s ease both}
     @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
     .list{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem}
     @media (max-width:780px){ .list{grid-template-columns:1fr} }
 
-    /* small accessible focus states */
-    a:focus, button:focus, input:focus, select:focus, textarea:focus{outline:2px dashed rgba(124,58,237,0.22);outline-offset:3px}
+    /* small helpers */
+    a.underline{position:relative;color:var(--accent);text-decoration:none}
+    a.underline::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .28s var(--ease)}
+    a.underline:hover::after{width:100%}
+    a:focus, button:focus, input:focus, select:focus, textarea:focus{outline:3px solid rgba(14,165,255,0.12);outline-offset:3px;border-radius:8px}
 
+    /* responsive tweaks */
+    @media (max-width:520px){
+      .logo{width:42px;height:42px;font-size:0.85rem}
+      .header-bar{padding:0.5rem 0.8rem}
+      .container{padding:1.1rem}
+      .hero{gap:1rem}
+    }
   </style>
 </head>
 <body>
@@ -245,58 +217,47 @@
         <div class="logo" aria-hidden="true">PS</div>
         <div>
           <h1 style="font-size:0.95rem;margin:0">Prashanta Subedi</h1>
-          <div class="muted" style="font-size:.78rem;margin-top:4px">Web & App Developer</div>
+          <div class="muted" style="font-size:.78rem;margin-top:4px;color:var(--muted)">Web & App Developer</div>
         </div>
       </div>
 
       <nav aria-label="Main navigation">
         <a href="#about">About</a>
         <a href="#services">Services</a>
-        <a href="#request" class="underline">Request Project</a>
+        <a href="#request" class="underline">Request</a>
         <a class="cta" href="#request">Let's talk</a>
       </nav>
 
-      <div class="hamburger" aria-hidden="true">
+      <div class="hamburger" aria-hidden="true" style="display:none">
         <button id="hambBtn" style="background:transparent;border:0;color:var(--muted);font-weight:800">☰</button>
-        <div id="mobileNav" class="mobile-nav" role="navigation" aria-hidden="true">
-          <a href="#about" style="display:block;padding:8px;color:var(--muted)">About</a>
-          <a href="#services" style="display:block;padding:8px;color:var(--muted)">Services</a>
-          <a href="#request" style="display:block;padding:8px;color:var(--muted)">Request</a>
-        </div>
       </div>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container" style="position:relative;z-index:10">
     <section class="hero" aria-label="Intro">
       <div class="hero-left">
         <h2 class="reveal">
-          <div class="intro-line">
-            <span class="name">Hi — I'm Prashanta Subedi.</span>
-            <div class="rotator" aria-hidden="true" title="Skills and focus">
-              <span class="word"><span>Full‑stack developer</span></span>
-              <span class="word"><span>React & React Native</span></span>
-              <span class="word"><span>Performance & Accessibility</span></span>
-              <span class="word"><span>Web & Mobile apps</span></span>
-              <span class="word"><span>Business-ready solutions</span></span>
-            </div>
+          <div class="intro">
+            <span class="name">Hi — I'm <strong style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">Prashanta Subedi</strong></span>
+            <span class="typed" aria-hidden="true" id="typedText"></span>
           </div>
         </h2>
 
-        <p class="reveal">I build modern, responsive websites and cross-platform apps with attention to performance, accessibility, and delightful UX. I turn ideas into polished, production-ready products.</p>
+        <p class="reveal">I design and build modern, performant websites and cross-platform apps. I focus on accessibility, clean code, and delivering business-ready solutions that scale.</p>
 
         <div class="actions reveal" style="display:flex;gap:12px">
           <a class="btn-primary" href="#request">Request a Project</a>
-          <button id="profileBtn" class="btn-outline" type="button" aria-expanded="false">View Full Profile</button>
+          <button id="profileBtn" class="btn-outline" type="button" aria-expanded="false">See Full Profile</button>
         </div>
 
-        <div style="margin-top:1.4rem;display:flex;gap:12px;align-items:center" class="reveal">
+        <div style="margin-top:1.2rem;display:flex;gap:12px;align-items:center" class="reveal">
           <div class="tag">Available for hire</div>
-          <div class="muted" style="font-size:.95rem">Remote — open to freelance & contract work</div>
+          <div style="color:var(--muted)">Remote — open to freelance & contract work</div>
         </div>
 
         <div id="profileFull" class="profile-full" aria-hidden="true">
-          <h3 style="margin-top:0">About — Quick facts</h3>
+          <h3 style="margin-top:0;color:var(--text)">Full profile</h3>
           <div class="list">
             <div>
               <strong>Location</strong>
@@ -308,19 +269,19 @@
             </div>
             <div>
               <strong>Certifications</strong>
-              <div class="muted">Certified in Python, HTML, PHP, Java, and additional languages</div>
+              <div class="muted">Python, HTML, PHP, Java, and additional training</div>
             </div>
             <div>
               <strong>Focus</strong>
-              <div class="muted">Web & mobile apps, performance, accessibility</div>
+              <div class="muted">Web & Mobile apps, performance, accessibility</div>
             </div>
           </div>
 
-          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:10px 0">
+          <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:10px 0">
 
-          <p class="muted" style="margin:0 0 8px">If you want a professional website or app for your business, product, or portfolio, I can help — from initial planning and UI/UX to development and deployment.</p>
+          <p style="margin:0;color:var(--muted)">If you'd like a professional website or app for business, product, or portfolio use, I can help from planning and UI/UX to development and deployment. Contact me to discuss scope and timelines.</p>
 
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
             <span class="tag">React</span>
             <span class="tag">React Native</span>
             <span class="tag">Node</span>
@@ -335,21 +296,21 @@
       <aside class="profile-card" aria-label="Profile card">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div style="display:flex;gap:12px;align-items:center" class="profile-meta">
-            <div class="avatar">PS</div>
+            <div class="avatar" aria-hidden="true">PS</div>
             <div>
-              <div style="font-weight:800">Prashanta Subedi</div>
-              <div class="muted" style="font-size:.9rem">Full‑stack Web & Mobile Developer</div>
+              <div style="font-weight:800;color:var(--text)">Prashanta Subedi</div>
+              <div style="font-size:.9rem;color:var(--muted)">Full‑stack Web & Mobile Developer</div>
             </div>
           </div>
           <div style="text-align:right">
-            <div class="muted" style="font-size:.8rem">Location</div>
-            <div style="font-weight:700">Nepal (Remote)</div>
+            <div style="font-size:.8rem;color:var(--muted)">Location</div>
+            <div style="font-weight:700;color:var(--text)">Nepal (Remote)</div>
           </div>
         </div>
 
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
+        <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:12px 0">
 
-        <p class="muted" style="margin:0 0 12px">I focus on clean, maintainable code and fast experiences. Recent work includes responsive marketing sites, PWAs and native-feeling mobile apps.</p>
+        <p style="margin:0 0 12px;color:var(--muted)">Clean, maintainable code; fast experiences; recent work includes responsive marketing sites, PWAs and native-feeling mobile apps.</p>
 
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <span class="tag">React</span>
@@ -359,72 +320,73 @@
         </div>
       </aside>
 
-      <div class="blobs" aria-hidden="true">
-        <div class="blob b1"></div>
-        <div class="blob b2"></div>
-        <div class="blob b3"></div>
+      <div class="shapes" aria-hidden="true">
+        <div class="shape s1"></div>
+        <div class="shape s2"></div>
+        <div class="shape s3"></div>
       </div>
     </section>
 
     <section id="about" class="about reveal">
       <h2>About Me</h2>
-      <p class="muted">I'm Prashanta, a developer from Nepal. I create modern, responsive websites and applications using current tools and best practices. I care about performance, accessibility, and delivering business value.</p>
+      <p style="color:var(--muted)">I'm Prashanta, a developer from Nepal. I build modern, responsive websites and applications using current tools and best practices. I prioritize performance, accessibility, and delivering measurable business value.</p>
     </section>
 
-    <section id="services" class="services">
+    <section id="services" class="services reveal">
       <h2>Services</h2>
       <div class="cards">
-        <div class="card reveal" style="transition-delay:.06s">
+        <div class="card" style="transition-delay:.06s">
           <h3>Website Development</h3>
           <p>Responsive, accessible and SEO-friendly websites tuned for speed and conversion.</p>
         </div>
-        <div class="card reveal" style="transition-delay:.12s">
+        <div class="card" style="transition-delay:.12s">
           <h3>Mobile Apps</h3>
           <p>Cross-platform apps using React Native or native tooling — smooth, performant UX.</p>
         </div>
-        <div class="card reveal" style="transition-delay:.18s">
-          <h3>Portfolio & Product Sites</h3>
-          <p>Professional portfolios and product landing pages with subtle, modern animations.</p>
+        <div class="card" style="transition-delay:.18s">
+          <h3>Product & Landing Pages</h3>
+          <p>Professional portfolios and product landing pages with polished interactions.</p>
         </div>
       </div>
     </section>
 
-    <section id="request" class="request">
+    <section id="request" class="request reveal">
       <h2>Request a Project</h2>
 
       <form id="projectForm" class="form" action="https://formspree.io/f/XXXXXXX" method="POST" novalidate>
         <div class="field">
-          <label class="muted" for="name">Name</label>
+          <label for="name">Name</label>
           <input id="name" name="name" type="text" placeholder="Your Name" required>
         </div>
 
         <div class="field">
-          <label class="muted" for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="Your Email" required>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@company.com" required>
         </div>
 
         <div class="field">
-          <label class="muted" for="project_type">Project Type</label>
+          <label for="project_type">Project Type</label>
           <select id="project_type" name="project_type" required>
             <option value="">Select Project Type</option>
             <option>Website</option>
             <option>Mobile App</option>
+            <option>Branding / Marketing</option>
             <option>Other</option>
           </select>
         </div>
 
         <div class="field">
-          <label class="muted" for="budget">Estimated Budget</label>
-          <input id="budget" name="budget" type="text" placeholder="Estimated Budget (optional)">
+          <label for="budget">Estimated Budget</label>
+          <input id="budget" name="budget" type="text" placeholder="Estimated budget (optional)">
         </div>
 
         <div style="grid-column:1 / -1" class="field">
-          <label class="muted" for="message">Project details</label>
+          <label for="message">Project details</label>
           <textarea id="message" name="message" placeholder="Tell me about the project..." required></textarea>
         </div>
 
-        <div style="grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;margin-top:6px">
-          <div class="hint muted">I'll reply within 48 hours — or email me directly: <a href="mailto:youremail@gmail.com" class="underline">youremail@gmail.com</a></div>
+        <div style="grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;margin-top:6px;flex-wrap:wrap;gap:12px">
+          <div class="hint" style="color:var(--muted)">I'll reply within 48 hours — or email me: <a href="mailto:youremail@gmail.com" class="underline">youremail@gmail.com</a></div>
           <div class="submit-wrap">
             <button type="submit" class="btn-primary">Submit Request</button>
             <button type="reset" class="btn-outline">Reset</button>
@@ -436,7 +398,7 @@
 
   <footer>
     <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <div class="muted">© <strong>Prashanta Subedi</strong> — Built with care.</div>
+      <div style="color:var(--muted)">© <strong>Prashanta Subedi</strong> — Built with care.</div>
       <div class="social" aria-hidden="false">
         <a href="https://github.com/Prashantasubedi" target="_blank" rel="noopener">GitHub</a>
         <a href="https://linkedin.com/in/prashantasubedi" target="_blank" rel="noopener">LinkedIn</a>
@@ -445,15 +407,34 @@
     </div>
   </footer>
 
-  <div id="toast" class="toast" role="status" aria-live="polite">Message sent — I'll get back to you soon!</div>
+  <div id="toast" style="position:fixed;right:20px;bottom:20px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:12px 18px;border-radius:12px;box-shadow:var(--shadow-lg);z-index:80;opacity:0;transform:translateY(8px);transition:all .28s var(--ease)">Message sent — I'll get back to you soon!</div>
 
   <script>
-    // small helper: reveal on scroll
+    // reveal on scroll
     (function(){
       const observer = new IntersectionObserver((entries)=>{
         entries.forEach(e=>{
           if(e.isIntersecting){
             e.target.classList.add('is-visible');
+            e.target.classList.add('reveal--shown');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible');
+            e.target.classList.add('is-visible'); // harmless duplicate
+            e.target.classList.add('is-visible');
+            e.target.style.opacity = 1;
+            e.target.style.transform = 'none';
             observer.unobserve(e.target);
           }
         });
@@ -461,23 +442,58 @@
       document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
     })();
 
-    // hero load animation
-    window.addEventListener('load', ()=> {
-      document.documentElement.classList.add('loaded');
-      // slight stagger for reveals already observed
-      document.querySelectorAll('.reveal').forEach((el,i)=>{
-        el.style.transitionDelay = (i*80)+'ms';
-      });
-    });
+    // hero typed rotator (lightweight)
+    (function(){
+      const words = [
+        'Full‑stack developer',
+        'React & React Native',
+        'Performance & Accessibility',
+        'Business-ready apps',
+        'Design → Code → Ship'
+      ];
+      const el = document.getElementById('typedText');
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      cursor.style.display = 'inline-block';
+      cursor.style.width = '2px';
+      cursor.style.height = '1.15em';
+      cursor.style.background = 'var(--text)';
+      cursor.style.marginLeft = '6px';
+      cursor.style.animation = 'blink 1s step-start infinite';
+      if(el) el.appendChild(cursor);
 
-    // mobile nav toggle
-    const hambBtn = document.getElementById('hambBtn');
-    const mobileNav = document.getElementById('mobileNav');
-    hambBtn?.addEventListener('click', ()=>{
-      mobileNav.classList.toggle('open');
-    });
+      let w = 0, i = 0, forward = true, offset = 0, skip = 0, skipWait = 18;
+      function type(){
+        if(!el) return;
+        el.style.minWidth = '10ch';
+        if(forward){
+          if(offset >= words[w].length){
+            skip++;
+            if(skip === skipWait){
+              forward = false;
+              skip = 0;
+            }
+          } else {
+            offset++;
+          }
+        } else {
+          if(offset === 0){
+            forward = true;
+            w = (w + 1) % words.length;
+          } else {
+            offset--;
+          }
+        }
+        const part = words[w].substr(0, offset);
+        el.firstChild && el.firstChild.remove ? null : null;
+        el.innerText = part;
+        el.appendChild(cursor);
+        setTimeout(type, forward ? 70 : 40);
+      }
+      setTimeout(type, 600);
+    })();
 
-    // Full profile toggle
+    // profile toggle
     (function(){
       const btn = document.getElementById('profileBtn');
       const panel = document.getElementById('profileFull');
@@ -486,40 +502,30 @@
         const open = panel.classList.toggle('open');
         panel.setAttribute('aria-hidden', (!open).toString());
         btn.setAttribute('aria-expanded', open.toString());
-        btn.textContent = open ? 'Hide Profile' : 'View Full Profile';
+        btn.textContent = open ? 'Hide Profile' : 'See Full Profile';
       });
     })();
 
-    // Nice form submit w/ fetch to Formspree (progress + toast)
+    // form submit (demo fallback)
     (function(){
       const form = document.getElementById('projectForm');
       const toast = document.getElementById('toast');
       if(!form) return;
-
       form.addEventListener('submit', async (e)=>{
         e.preventDefault();
         const data = new FormData(form);
         const action = form.getAttribute('action') || '';
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
         try{
-          const btn = form.querySelector('button[type="submit"]');
-          btn.disabled = true;
-          btn.textContent = 'Sending...';
-
-          // If user left placeholder action, do client-side fake wait
           if(!action || action.includes('XXXX')){
-            await new Promise(r => setTimeout(r, 900));
+            await new Promise(r=>setTimeout(r,900));
             showToast('Form submitted (demo). Replace Formspree action with your endpoint.');
             form.reset();
-            btn.disabled = false;
-            btn.textContent = 'Submit Request';
             return;
           }
-
-          const res = await fetch(action, {
-            method:'POST',
-            body: data,
-            headers:{ 'Accept': 'application/json' }
-          });
+          const res = await fetch(action, { method:'POST', body: data, headers:{ 'Accept': 'application/json' } });
           if(res.ok){
             showToast('Message sent — I will get back to you soon!');
             form.reset();
@@ -529,29 +535,32 @@
         } catch(err){
           showToast('Network error — please try again later.');
         } finally{
-          const btn = form.querySelector('button[type="submit"]');
-          btn.disabled = false;
-          btn.textContent = 'Submit Request';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Request';
         }
       });
 
       function showToast(msg){
+        if(!toast) return;
         toast.textContent = msg;
-        toast.classList.add('show');
-        setTimeout(()=>toast.classList.remove('show'), 4200);
+        toast.style.opacity = 1;
+        toast.style.transform = 'none';
+        setTimeout(()=>{ toast.style.opacity = 0; toast.style.transform = 'translateY(8px)'; }, 4200);
       }
     })();
 
-    // small parallax effect on mouse move for blobs
+    // subtle parallax for shapes on pointer move (disabled on touch)
     (function(){
-      const blobs = document.querySelectorAll('.blob');
-      if(!blobs.length) return;
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      if(isTouch) return;
+      const shapes = document.querySelectorAll('.shape');
+      if(!shapes.length) return;
       window.addEventListener('mousemove', (e)=>{
         const x = (e.clientX / window.innerWidth) - 0.5;
         const y = (e.clientY / window.innerHeight) - 0.5;
-        blobs.forEach((b,i)=>{
-          const depth = (i+1) * 6;
-          b.style.transform = `translate3d(${x * depth}px, ${y * depth}px, 0)`;
+        shapes.forEach((s,i)=>{
+          const depth = (i+1) * 8;
+          s.style.transform = `translate3d(${x * depth}px, ${y * depth}px, 0)`;
         });
       });
     })();
