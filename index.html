@@ -97,7 +97,7 @@
       box-shadow: 0 10px 50px rgba(2,6,23,0.6);
       transform:translateY(18px);opacity:0;transition:all .9s var(--ease) .2s;
     }
-    .avatar{width:86px;height:86px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#6ee7b7);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:22px;box-shadow:0 8px 30px rgba(124,58,237,0.12)}
+    .avatar{width:86px;height:86px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#6ee7b7);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:20px}
     .profile-meta{display:flex;align-items:center;gap:1rem}
     .tag{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:999px;color:var(--muted);font-weight:700}
 
@@ -181,9 +181,61 @@
 
     /* success toast */
     .toast{
-      position:fixed;right:20px;bottom:20px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:12px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.6);z-index:80;opacity:0;transform:translateY(16px);transition:all .4s var(--ease)
+      position:fixed;right:20px;bottom:20px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:12px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.6);z-index:80;opacity:0;transform:translateY(8px);transition:all .28s var(--ease)
     }
     .toast.show{opacity:1;transform:none}
+
+    /* Typing / rotator in hero */
+    .intro-line{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+    .name{
+      font-weight:900;
+      font-size:clamp(20px,4vw,36px);
+      letter-spacing:-0.01em;
+      display:inline-block;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .rotator{
+      color:var(--accent-2);
+      font-weight:700;
+      white-space:nowrap;
+      overflow:hidden;
+      display:inline-block;
+      vertical-align:bottom;
+    }
+    .rotator .word{
+      display:inline-block;
+      transform:translateY(0);
+      animation: rotateWords 8s linear infinite 0s;
+    }
+    @keyframes rotateWords{
+      0%{transform:translateY(0)}
+      20%{transform:translateY(-100%)}
+      40%{transform:translateY(-200%)}
+      60%{transform:translateY(-300%)}
+      80%{transform:translateY(-400%)}
+      100%{transform:translateY(0)}
+    }
+    .rotator .word span{display:block;height:1.1em}
+
+    /* full profile panel */
+    .profile-full{
+      margin-top:1rem;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border:1px solid rgba(255,255,255,0.03);
+      padding:1rem;border-radius:12px;display:none;
+    }
+    .profile-full.open{display:block;animation:fadeIn .36s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    .list{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem}
+    @media (max-width:780px){ .list{grid-template-columns:1fr} }
+
+    /* small accessible focus states */
+    a:focus, button:focus, input:focus, select:focus, textarea:focus{outline:2px dashed rgba(124,58,237,0.22);outline-offset:3px}
+
   </style>
 </head>
 <body>
@@ -218,17 +270,65 @@
   <main class="container">
     <section class="hero" aria-label="Intro">
       <div class="hero-left">
-        <h2 class="reveal">Hi, I'm Prashanta — I build delightful web & mobile experiences.</h2>
-        <p class="reveal">I create modern, responsive websites and cross-platform apps with attention to performance, accessibility and great UX. I enjoy turning ideas into polished products.</p>
+        <h2 class="reveal">
+          <div class="intro-line">
+            <span class="name">Hi — I'm Prashanta Subedi.</span>
+            <div class="rotator" aria-hidden="true" title="Skills and focus">
+              <span class="word"><span>Full‑stack developer</span></span>
+              <span class="word"><span>React & React Native</span></span>
+              <span class="word"><span>Performance & Accessibility</span></span>
+              <span class="word"><span>Web & Mobile apps</span></span>
+              <span class="word"><span>Business-ready solutions</span></span>
+            </div>
+          </div>
+        </h2>
+
+        <p class="reveal">I build modern, responsive websites and cross-platform apps with attention to performance, accessibility, and delightful UX. I turn ideas into polished, production-ready products.</p>
 
         <div class="actions reveal" style="display:flex;gap:12px">
           <a class="btn-primary" href="#request">Request a Project</a>
-          <a class="btn-outline" href="#services">See Services</a>
+          <button id="profileBtn" class="btn-outline" type="button" aria-expanded="false">View Full Profile</button>
         </div>
 
         <div style="margin-top:1.4rem;display:flex;gap:12px;align-items:center" class="reveal">
           <div class="tag">Available for hire</div>
-          <div class="muted" style="font-size:.95rem">Based remotely — open to remote & freelance work</div>
+          <div class="muted" style="font-size:.95rem">Remote — open to freelance & contract work</div>
+        </div>
+
+        <div id="profileFull" class="profile-full" aria-hidden="true">
+          <h3 style="margin-top:0">About — Quick facts</h3>
+          <div class="list">
+            <div>
+              <strong>Location</strong>
+              <div class="muted">Nepal — Remote</div>
+            </div>
+            <div>
+              <strong>Education</strong>
+              <div class="muted">Graduated from Balmiki</div>
+            </div>
+            <div>
+              <strong>Certifications</strong>
+              <div class="muted">Certified in Python, HTML, PHP, Java, and additional languages</div>
+            </div>
+            <div>
+              <strong>Focus</strong>
+              <div class="muted">Web & mobile apps, performance, accessibility</div>
+            </div>
+          </div>
+
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:10px 0">
+
+          <p class="muted" style="margin:0 0 8px">If you want a professional website or app for your business, product, or portfolio, I can help — from initial planning and UI/UX to development and deployment.</p>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+            <span class="tag">React</span>
+            <span class="tag">React Native</span>
+            <span class="tag">Node</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Python</span>
+            <span class="tag">PHP</span>
+            <span class="tag">Java</span>
+          </div>
         </div>
       </div>
 
@@ -243,7 +343,7 @@
           </div>
           <div style="text-align:right">
             <div class="muted" style="font-size:.8rem">Location</div>
-            <div style="font-weight:700">Remote</div>
+            <div style="font-weight:700">Nepal (Remote)</div>
           </div>
         </div>
 
@@ -268,7 +368,7 @@
 
     <section id="about" class="about reveal">
       <h2>About Me</h2>
-      <p class="muted">I build modern, responsive websites and applications using the latest technologies. I take pride in delivering clean, functional, and performant digital experiences that users enjoy. My stack usually includes React, React Native, TypeScript, Node.js and modern tooling.</p>
+      <p class="muted">I'm Prashanta, a developer from Nepal. I create modern, responsive websites and applications using current tools and best practices. I care about performance, accessibility, and delivering business value.</p>
     </section>
 
     <section id="services" class="services">
@@ -376,6 +476,19 @@
     hambBtn?.addEventListener('click', ()=>{
       mobileNav.classList.toggle('open');
     });
+
+    // Full profile toggle
+    (function(){
+      const btn = document.getElementById('profileBtn');
+      const panel = document.getElementById('profileFull');
+      if(!btn || !panel) return;
+      btn.addEventListener('click', ()=>{
+        const open = panel.classList.toggle('open');
+        panel.setAttribute('aria-hidden', (!open).toString());
+        btn.setAttribute('aria-expanded', open.toString());
+        btn.textContent = open ? 'Hide Profile' : 'View Full Profile';
+      });
+    })();
 
     // Nice form submit w/ fetch to Formspree (progress + toast)
     (function(){
