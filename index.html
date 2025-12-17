@@ -94,11 +94,10 @@
     .chat-input{display:flex;gap:8px}
     .chat-input input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)}
 
-    /* Background image layers: optimized responsive & progressive loading */
+    /* Background layers (now loaded from external URLs via script) */
     .bg-cobra{position:fixed;inset:0;z-index:6;pointer-events:none;overflow:visible}
     .bg-layer{position:absolute;left:50%;transform:translateX(-50%);will-change:transform,opacity,filter;mix-blend-mode:screen}
     .bg-layer img{display:block;width:100%;height:auto;max-width:2200px;object-fit:cover}
-    /* layer sizes & visual treatment */
     .bg-layer.layer1{top:18%;width:160%;opacity:0.08;filter:blur(2px) contrast(.95) saturate(.65);animation:parallax1 34s linear infinite}
     .bg-layer.layer2{top:42%;width:140%;opacity:0.06;filter:blur(4px) contrast(.9) saturate(.5);animation:parallax2 48s linear infinite}
     .bg-layer.layer3{top:64%;width:120%;opacity:0.04;filter:blur(6px) contrast(.85) saturate(.45);animation:parallax3 22s linear infinite}
@@ -107,7 +106,6 @@
     @keyframes parallax2{0%{transform:translateX(-52%) translateY(-1%)}50%{transform:translateX(-46%) translateY(0%)}100%{transform:translateX(-52%) translateY(-1%)}}
     @keyframes parallax3{0%{transform:translateX(-50%) translateY(-3%)}50%{transform:translateX(-42%) translateY(0%)}100%{transform:translateX(-50%) translateY(-3%)}}
 
-    /* respect user motion preferences */
     @media (prefers-reduced-motion: reduce){
       .bg-layer, .bg-layer img, .top-left-name .name{animation: none !important; transition: none !important}
     }
@@ -115,7 +113,7 @@
     @media (max-width:640px){
       .top-left-name{left:10px;top:10px;padding:6px 10px}
       .hero-left h1{font-size:28px}
-      .bg-layer{display:none} /* hide heavy backgrounds on small screens */
+      .bg-layer{display:none}
     }
 
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -123,36 +121,15 @@
 </head>
 <body>
   <!--
-    Advanced background setup:
-    - Please ensure the following files are present in your repo under the assets/ folder:
-      assets/cobra-600.webp
-      assets/cobra-1200.webp
-      assets/cobra-2000.webp
-
-    - The code below uses these webp files and lazy-loads them for fast first paint.
+    Background layers: these images are set dynamically from EXTERNAL_IMAGES in the script below.
+    Replace the URLs in the script with your public image URLs (Imgur/Cloudinary/GitHub raw/etc.)
+    Example GitHub raw URL if you upload to your repo:
+      https://raw.githubusercontent.com/Prashantasubedi/prashantasubedi.github.io/main/assets/cobra-1200.webp
   -->
-
   <div class="bg-cobra" aria-hidden="true" id="bgCobra">
-    <div class="bg-layer layer1" data-depth="0.12">
-      <picture>
-        <source type="image/webp" srcset="assets/cobra-600.webp 600w, assets/cobra-1200.webp 1200w, assets/cobra-2000.webp 2000w" sizes="(max-width:600px) 600px, (max-width:1200px) 1200px, 2000px">
-        <img data-src="assets/cobra-1200.webp" alt="" class="bg-img lazy" loading="lazy" width="2000" height="600">
-      </picture>
-    </div>
-
-    <div class="bg-layer layer2" data-depth="0.06">
-      <picture>
-        <source type="image/webp" srcset="assets/cobra-600.webp 600w, assets/cobra-1200.webp 1200w, assets/cobra-2000.webp 2000w" sizes="(max-width:600px) 600px, (max-width:1200px) 1200px, 2000px">
-        <img data-src="assets/cobra-1200.webp" alt="" class="bg-img lazy" loading="lazy" width="2000" height="600">
-      </picture>
-    </div>
-
-    <div class="bg-layer layer3" data-depth="0.02">
-      <picture>
-        <source type="image/webp" srcset="assets/cobra-600.webp 600w, assets/cobra-1200.webp 1200w, assets/cobra-2000.webp 2000w" sizes="(max-width:600px) 600px, (max-width:1200px) 1200px, 2000px">
-        <img data-src="assets/cobra-1200.webp" alt="" class="bg-img lazy" loading="lazy" width="2000" height="600">
-      </picture>
-    </div>
+    <div class="bg-layer layer1" data-depth="0.12"><img class="bg-img lazy" data-src="" alt="" loading="lazy" width="2000" height="600"></div>
+    <div class="bg-layer layer2" data-depth="0.06"><img class="bg-img lazy" data-src="" alt="" loading="lazy" width="2000" height="600"></div>
+    <div class="bg-layer layer3" data-depth="0.02"><img class="bg-img lazy" data-src="" alt="" loading="lazy" width="2000" height="600"></div>
   </div>
 
   <!-- Top-left clickable name (scroll to top) -->
@@ -172,22 +149,13 @@
             <p>I craft modern websites and mobile apps with attention to performance, accessibility and clean, maintainable code. I also enjoy product writing and UX-focused scripting.</p>
 
             <div class="social-row" aria-label="Social links">
-              <a class="social-btn" href="https://github.com/Prashantasubedi" target="_blank" rel="noopener" aria-label="GitHub link">
-                <!-- GitHub -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.55-3.88-1.55-.53-1.36-1.3-1.72-1.3-1.72-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.76.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.21-1.5 3.18-1.18 3.18-1.18.63 1.57.23 2.73.11 3.02.74.81 1.19 1.84 1.19 3.1 0 4.43-2.71 5.41-5.29 5.68.42.36.79 1.08.79 2.17 0 1.57-.01 2.83-.01 3.21 0 .31.21.67.8.56C20.71 21.37 24 17.08 24 12 24 5.65 18.35.5 12 .5z"/></svg>
-              </a>
+              <a class="social-btn" href="https://github.com/Prashantasubedi" target="_blank" rel="noopener" aria-label="GitHub link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.55-3.88-1.55-.53-1.36-1.3-1.72-1.3-1.72-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.76.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.21-1.5 3.18-1.18 3.18-1.18.63 1.57.23 2.73.11 3.02.74.81 1.19 1.84 1.19 3.1 0 4.43-2.71 5.41-5.29 5.68.42.36.79 1.08.79 2.17 0 1.57-.01 2.83-.01 3.21 0 .31.21.67.8.56C20.71 21.37 24 17.08 24 12 24 5.65 18.35.5 12 .5z"/></svg></a>
 
-              <a class="social-btn" href="https://www.linkedin.com/in/prashanta-subedi-57425a39a/" target="_blank" rel="noopener" aria-label="LinkedIn link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4V8zm7.5 0h3.84v2.18h.05c.54-1.02 1.86-2.09 3.83-2.09 4.1 0 4.85 2.7 4.85 6.21V24H19V17.2c0-1.61-.03-3.69-2.25-3.69-2.25 0-2.59 1.75-2.59 3.56V24H7.99V8z"/></svg>
-              </a>
+              <a class="social-btn" href="https://www.linkedin.com/in/prashanta-subedi-57425a39a/" target="_blank" rel="noopener" aria-label="LinkedIn link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4V8zm7.5 0h3.84v2.18h.05c.54-1.02 1.86-2.09 3.83-2.09 4.1 0 4.85 2.7 4.85 6.21V24H19V17.2c0-1.61-.03-3.69-2.25-3.69-2.25 0-2.59 1.75-2.59 3.56V24H7.99V8z"/></svg></a>
 
-              <a class="social-btn" href="https://instagram.com/prashantasubedi2" target="_blank" rel="noopener" aria-label="Instagram link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.16c3.2 0 3.584.012 4.85.07 1.17.055 1.95.24 2.406.403a4.9 4.9 0 011.7 1.03c.49.49.83 1.09 1.03 1.7.165.456.35 1.236.404 2.406.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.055 1.17-.24 1.95-.404 2.406a4.9 4.9 0 01-1.03 1.7 4.9 4.9 0 01-1.7 1.03c-.456.165-1.236.35-2.406.404-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.055-1.95-.24-2.406-.404a4.9 4.9 0 01-1.7-1.03 4.9 4.9 0 01-1.03-1.7c-.165-.456-.35-1.236-.404-2.406C2.172 15.584 2.16 15.2 2.16 12s.012-3.584.07-4.85c.055-1.17.24-1.95.404-2.406a4.9 4.9 0 011.03-1.7 4.9 4.9 0 011.7-1.03c.456-.165 1.236-.35 2.406-.404C8.416 2.172 8.8 2.16 12 2.16zm0 1.8c-3.157 0-3.526.012-4.773.069-1.03.052-1.588.23-1.96.383a3.12 3.12 0 00-1.13.737 3.12 3.12 0 00-.737 1.13c-.153.372-.33.93-.383 1.96-.057 1.247-.069 1.616-.069 4.773s.012 3.526.069 4.773c.052 1.03.23 1.588.383 1.96.173.441.403.82.737 1.13.31.334.689.564 1.13.737.372.153.93.33 1.96.383 1.247.057 1.616.069 4.773.069s3.526-.012 4.773-.069c1.03-.052 1.588-.23 1.96-.383a3.12 3.12 0 001.13-.737 3.12 3.12 0 00.737-1.13c.153-.372.33-.93.383-1.96.057-1.247.069-1.616.069-4.773s-.012-3.526-.069-4.773c-.052-1.03-.23-1.588-.383-1.96a3.12 3.12 0 00-.737-1.13 3.12 3.12 0 00-1.13-.737c-.372-.153-.93-.33-1.96-.383-1.247-.057-1.616-.069-4.773-.069zM12 6.84a5.16 5.16 0 100 10.32 5.16 5.16 0 000-10.32zm0 1.8a3.36 3.36 0 110 6.72 3.36 3.36 0 010-6.72zm5.1-1.98a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/></svg>
-              </a>
+              <a class="social-btn" href="https://instagram.com/prashantasubedi2" target="_blank" rel="noopener" aria-label="Instagram link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.584.012 4.85.07 1.17.055 1.95.24 2.406.403a4.9 4.9 0 011.7 1.03c.49.49.83 1.09 1.03 1.7.165.456.35 1.236.404 2.406.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.055 1.17-.24 1.95-.404 2.406a4.9 4.9 0 01-1.03 1.7 4.9 4.9 0 01-1.7 1.03c-.456.165-1.236.35-2.406.404-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.055-1.95-.24-2.406-.404a4.9 4.9 0 01-1.7-1.03 4.9 4.9 0 01-1.03-1.7c-.165-.456-.35-1.236-.404-2.406C2.172 15.584 2.16 15.2 2.16 12s.012-3.584.07-4.85c.055-1.17.24-1.95.404-2.406a4.9 4.9 0 011.03-1.7 4.9 4.9 0 011.7-1.03c.456-.165 1.236-.35 2.406-.404C8.416 2.172 8.8 2.16 12 2.16zm0 1.8c-3.157 0-3.526.012-4.773.069-1.03.052-1.588.23-1.96.383a3.12 3.12 0 00-1.13.737 3.12 3.12 0 00-.737 1.13c-.153.372-.33.93-.383 1.96-.057 1.247-.069 1.616-.069 4.773s.012 3.526.069 4.773c.052 1.03.23 1.588.383 1.96.173.441.403.82.737 1.13.31.334.689.564 1.13.737.372.153.93.33 1.96.383 1.247.057 1.616.069 4.773.069s3.526-.012 4.773-.069c1.03-.052 1.588-.23 1.96-.383a3.12 3.12 0 001.13-.737 3.12 3.12 0 00.737-1.13c.153-.372.33-.93.383-1.96.057-1.247.069-1.616.069-4.773s-.012-3.526-.069-4.773c-.052-1.03-.23-1.588-.383-1.96a3.12 3.12 0 00-.737-1.13 3.12 3.12 0 00-1.13-.737c-.372-.153-.93-.33-1.96-.383-1.247-.057-1.616-.069-4.773-.069zM12 6.84a5.16 5.16 0 100 10.32 5.16 5.16 0 000-10.32zm0 1.8a3.36 3.36 0 110 6.72 3.36 3.36 0 010-6.72zm5.1-1.98a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/></svg></a>
 
-              <a class="social-btn" href="mailto:prashantaasubedii@gmail.com" aria-label="Email link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 13.065L0 5.25V19a2 2 0 002 2h20a2 2 0 002-2V5.25L12 13.065zM12 11L24 3H0l12 8z"/></svg>
-              </a>
+              <a class="social-btn" href="mailto:prashantaasubedii@gmail.com" aria-label="Email link"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 13.065L0 5.25V19a2 2 0 002 2h20a2 2 0 002-2V5.25L12 13.065zM12 11L24 3H0l12 8z"/></svg></a>
             </div>
           </div>
 
@@ -281,33 +249,70 @@
   <div id="toast" class="toast" role="status" aria-live="polite">Message sent — I will get back to you.</div>
 
   <script>
-    /* ========== Image loading & progressive swap ==========
-       - Uses data-src in <img> and loads actual images when visible.
-       - Expects you to place optimized images at:
-         assets/cobra-600.webp, assets/cobra-1200.webp, assets/cobra-2000.webp
-       - If filenames differ, update the srcset/data-src values above.
-    */
-    (function lazyLoadBg(){
+    // Replace these URLs with your publicly hosted images.
+    // Example GitHub raw URL if you upload to your repo (main branch):
+    // const GH_BASE = 'https://raw.githubusercontent.com/Prashantasubedi/prashantasubedi.github.io/main/assets';
+    // EXTERNAL_IMAGES.small  = GH_BASE + '/cobra-600.webp'
+    // EXTERNAL_IMAGES.medium = GH_BASE + '/cobra-1200.webp'
+    // EXTERNAL_IMAGES.large  = GH_BASE + '/cobra-2000.webp'
+
+    const EXTERNAL_IMAGES = {
+      small:  'https://i.imgur.com/your-small.webp',   // replace with your public small image URL
+      medium: 'https://i.imgur.com/your-medium.webp',  // replace with your public medium image URL
+      large:  'https://i.imgur.com/your-large.webp'    // replace with your public large image URL
+    };
+
+    // Lazy-load background images (decides appropriate size)
+    (function lazyLoadBgExternal(){
+      const layers = document.querySelectorAll('.bg-layer');
+      if(!layers.length) return;
+
+      function chooseSize(){
+        const w = window.innerWidth;
+        if(w <= 600) return EXTERNAL_IMAGES.small || EXTERNAL_IMAGES.medium || EXTERNAL_IMAGES.large;
+        if(w <= 1200) return EXTERNAL_IMAGES.medium || EXTERNAL_IMAGES.large || EXTERNAL_IMAGES.small;
+        return EXTERNAL_IMAGES.large || EXTERNAL_IMAGES.medium || EXTERNAL_IMAGES.small;
+      }
+
+      function setImages(){
+        const src = chooseSize();
+        layers.forEach((layer, idx)=>{
+          const img = layer.querySelector('img.bg-img');
+          if(img && !img.src){
+            img.src = src;
+            img.classList.remove('lazy');
+            // minor opacity stagger for depth
+            img.style.opacity = (0.08 - idx*0.02).toString();
+          }
+        });
+      }
+
+      // If IntersectionObserver present, wait until bg container is near viewport (non-blocking)
       if('IntersectionObserver' in window){
-        const imgs = document.querySelectorAll('.bg-layer img.lazy');
+        const bg = document.getElementById('bgCobra');
         const io = new IntersectionObserver((entries, obs) => {
-          entries.forEach(e => {
+          entries.forEach(e=>{
             if(e.isIntersecting){
-              const img = e.target;
-              const src = img.getAttribute('data-src');
-              if(src){
-                img.src = src;
-                img.classList.remove('lazy');
-              }
-              obs.unobserve(img);
+              setImages();
+              obs.disconnect();
             }
           });
-        }, {root: null, threshold: 0.01});
-        imgs.forEach(i => io.observe(i));
+        }, {root:null, rootMargin: '500px', threshold: 0.01});
+        io.observe(bg);
       } else {
-        // fallback: load immediately
-        document.querySelectorAll('.bg-layer img.lazy').forEach(img => img.src = img.getAttribute('data-src'));
+        // fallback — set immediately
+        setImages();
       }
+
+      // update on resize (choose different size if window changed)
+      let resizeTimeout;
+      window.addEventListener('resize', ()=> {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(()=> {
+          // only change if different size
+          setImages();
+        }, 250);
+      }, {passive:true});
     })();
 
     /* ========== Pointer parallax (mouse) for background layers ==========
@@ -323,7 +328,6 @@
       let mouseX = 0, mouseY = 0, cx = 0, cy = 0, rafId;
 
       function onMove(e){
-        // support touch/mouse
         const clientX = (e.touches ? e.touches[0].clientX : e.clientX);
         const clientY = (e.touches ? e.touches[0].clientY : e.clientY);
         mouseX = (clientX / window.innerWidth) - 0.5;
@@ -335,8 +339,8 @@
         cy += (mouseY - cy) * 0.08;
         layers.forEach((layer, i) => {
           const depth = parseFloat(layer.dataset.depth || 0.05) * (i + 1);
-          const tx = cx * depth * 60; // horizontal translation
-          const ty = cy * depth * 30; // vertical translation
+          const tx = cx * depth * 60;
+          const ty = cy * depth * 30;
           layer.style.transform = `translateX(calc(-50% + ${tx}px)) translateY(${ty}px)`;
         });
         rafId = null;
@@ -344,23 +348,9 @@
 
       window.addEventListener('mousemove', onMove, {passive:true});
       window.addEventListener('touchmove', onMove, {passive:true});
-
-      // subtle parallax on scroll for depth
-      let lastScroll = window.scrollY;
-      window.addEventListener('scroll', () => {
-        if(prefersReduced) return;
-        const s = window.scrollY;
-        layers.forEach((layer, i) => {
-          const depth = parseFloat(layer.dataset.depth || 0.05) * (i + 1);
-          const offset = (s - lastScroll) * depth * 0.1;
-          layer.style.transform = layer.style.transform ? layer.style.transform + ` translateY(${offset}px)` : `translateX(-50%) translateY(${offset}px)`;
-        });
-        lastScroll = s;
-      }, {passive:true});
     })();
 
     /* ========== Rotator (hero) ==========
-       Small fade/rotate implemented with intervals (polite, accessible)
     */
     (function(){
       const words = ['script writer','full‑stack developer','product thinker','app maker','UX-minded dev'];
@@ -375,15 +365,14 @@
       setInterval(show, 2600);
     })();
 
-    /* ========== Top-left button behavior: scroll-to-top (no reload) ==========
-       More user-friendly than reload.
+    /* ========== Top-left button behavior: scroll-to-top ==========
     */
     document.getElementById('topNameBtn').addEventListener('click', function(){
       this.animate([{transform:'scale(1)'},{transform:'scale(0.98)'},{transform:'scale(1)'}], {duration:220});
       window.scrollTo({top:0,behavior:'smooth'});
     });
 
-    /* ========== Chat, Form, Toast (kept from previous implementation) ========== */
+    /* Chat, Form, Toast */
     window.toggleChat = function(){
       document.getElementById('chatPanel').classList.toggle('open');
     };
@@ -419,7 +408,6 @@
 
     // accessibility: close chat on ESC
     document.addEventListener('keydown', e => { if(e.key === 'Escape') document.getElementById('chatPanel').classList.remove('open'); });
-
   </script>
 </body>
 </html>
