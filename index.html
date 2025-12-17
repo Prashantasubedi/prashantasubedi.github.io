@@ -8,299 +8,245 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <meta name="theme-color" content="#0b1220">
+  <meta name="theme-color" content="#071024">
 
   <style>
     :root{
-      --bg: #0b1220;
-      --panel: #071026;
-      --muted: #9aa6bf;
-      --text: #e6eef8;
-      --accent: #ff3b3b; /* red highlight for name */
-      --accent-2: #06b6d4;
-      --glass: rgba(255,255,255,0.03);
+      --bg:#071024;
+      --muted:#9aa6bf;
+      --text:#e6eef8;
+      --accent-red:#ff3b3b;
+      --accent-2:#06b6d4;
+      --glass:rgba(255,255,255,0.03);
       --radius:14px;
       --max-width:1200px;
       --ease:cubic-bezier(.2,.9,.3,1);
-      --card-shadow: 0 12px 40px rgba(2,6,23,0.6);
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial; background:linear-gradient(180deg,#071023 0%, #081630 60%, #071024 100%);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
     a{color:inherit}
-    .wrap{max-width:var(--max-width);margin:0 auto;padding:28px;position:relative;min-height:100vh;display:flex;gap:28px;align-items:stretch}
+    .container{max-width:1200px;margin:0 auto;padding:28px;position:relative;z-index:30}
 
-    /* Left large name column */
-    .left {
-      width:300px; min-width:180px; display:flex;align-items:center;justify-content:center;
-      position:relative;
+    /* fixed top-left prominent name */
+    .top-left-name{
+      position:fixed;left:18px;top:14px;z-index:220;cursor:pointer;
+      display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;
+      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      transition:transform .18s var(--ease), box-shadow .18s var(--ease);
+      box-shadow:0 8px 30px rgba(2,6,23,0.45);
     }
-    .left .bigname{
-      writing-mode:vertical-rl; text-orientation:mixed;
-      font-weight:900; font-size:48px; letter-spacing:.02em;
-      color:var(--muted);
-      transform: rotate(180deg);
+    .top-left-name:hover{transform:translateY(-4px);box-shadow:0 18px 50px rgba(2,6,23,0.6)}
+    .top-left-name .name{
+      font-weight:900;font-size:20px;color:var(--accent-red);letter-spacing:.02em;
+      display:inline-block;transform-origin:center;animation: pulse 3.6s ease-in-out infinite;
     }
-    /* highlight "Prashanta" in red - show only first name large */
-    .left .bigname span.highlight{
-      color:var(--accent);
-      -webkit-text-stroke: 0px rgba(255,255,255,0.02);
-      transform:rotate(0deg);
-      writing-mode:horizontal-tb;
-      display:inline-block;
-      font-size:56px;
-      margin-left:8px;
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+
+    /* full-screen animated background car (image) */
+    .bg-cobra{
+      position:fixed;inset:0;z-index:2;pointer-events:none;overflow:visible;mix-blend-mode:screen;
     }
 
-    /* Right main column */
-    .right{flex:1; display:flex; flex-direction:column; gap:20px; position:relative}
+    /* The actual provided car image should be placed at assets/cobra-car.jpg (see note below).
+       The .car-image element is large and slightly blurred / desaturated so it reads as a subtle background.
+       It animates horizontally and very slowly to create movement. */
+    .car-image{
+      position:absolute;
+      left:-20%;           /* start a bit off-screen */
+      top:30%;
+      width:140%;
+      height:auto;
+      opacity:0.08;        /* subtle so foreground stays readable */
+      filter: blur(2px) contrast(0.95) saturate(0.6);
+      transform-origin:center;
+      animation: carSlide 26s linear infinite;
+      will-change:transform;
+    }
 
-    /* Top nav / options row */
-    .top-options{display:flex;align-items:center;justify-content:flex-end;gap:12px}
-    .option{
-      background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-      border:1px solid rgba(255,255,255,0.04);
-      padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:700;
-      transition:transform .18s var(--ease), background .18s;
-    }
-    .option:hover{transform:translateY(-4px);color:var(--text);background:linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03))}
+    /* add multiple layers (same image at different speeds & opacity) for depth */
+    .car-image.layer2{ top:45%; opacity:0.06; transform-origin:center; animation-duration:36s; filter:blur(4px) saturate(0.45); }
+    .car-image.layer3{ top:60%; opacity:0.04; animation-duration:18s; filter:blur(6px) saturate(0.35); }
 
-    /* Hero / big screen */
-    .hero-screen{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.04);
-      border-radius:14px;padding:28px;box-shadow:var(--card-shadow);position:relative;overflow:hidden;
-      display:flex;flex-direction:column;gap:14px;
+    @keyframes carSlide{
+      0%{ transform: translateX(-6%) translateY(-1%) scale(1); }
+      50%{ transform: translateX(6%) translateY(0%) scale(1.02); }
+      100%{ transform: translateX(-6%) translateY(-1%) scale(1); }
     }
-    .hero-top{display:flex;gap:18px;align-items:flex-start;justify-content:space-between}
-    .hero-left{
-      max-width:64%;
-    }
-    .hero-left h1{margin:0;font-size:clamp(24px,5vw,48px);line-height:1; font-weight:900}
-    .hero-left h1 .small{font-weight:600;color:var(--muted);display:block;font-size:14px;margin-bottom:6px}
-    .hero-left .hi{font-size:32px;margin:8px 0 6px}
-    .rotator{color:var(--accent-2);font-weight:800;font-size:20px;min-height:28px}
-    .hero-left p{color:var(--muted);margin:12px 0 0 0;max-width:70ch}
 
-    .hero-right{display:flex;flex-direction:column;gap:10px;align-items:flex-end;min-width:220px}
-    .cta-box{
-      background:linear-gradient(90deg, rgba(124,58,237,0.12), rgba(6,182,212,0.06));
-      border-radius:12px;padding:12px 16px;border:1px solid rgba(255,255,255,0.03);font-weight:800;
-      display:flex;flex-direction:column;gap:8px;align-items:flex-end;
+    /* hero card & content */
+    main.hero{min-height:70vh;padding-top:72px;display:flex;align-items:flex-start;justify-content:center;z-index:30;position:relative}
+    .hero-card{
+      width:100%;max-width:980px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.04);border-radius:14px;padding:36px;box-shadow:0 12px 50px rgba(2,6,23,0.55);
+      position:relative;z-index:40;overflow:hidden;
     }
-    .cta-box .cta-btn{
-      background:linear-gradient(90deg,var(--accent),#ff6b6b);color:white;padding:10px 14px;border-radius:10px;border:0;font-weight:900;cursor:pointer;
-      box-shadow:0 10px 30px rgba(255,59,59,0.12);
-    }
-    .cta-box small{color:var(--muted);font-weight:600}
 
-    /* Social icons row under hero */
-    .social-row{display:flex;gap:12px;align-items:center;margin-top:10px}
-    .social-btn{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;border:1px solid rgba(255,255,255,0.03)}
+    .hero-top{display:flex;gap:24px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+    .hero-left{flex:1;min-width:260px}
+    .hero-left .tagline{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.06em}
+    .hero-left h1{margin:8px 0 6px;font-size:clamp(28px,6vw,56px);line-height:1;font-weight:900}
+    .hero-left .rotator{color:var(--accent-2);font-weight:800;font-size:20px;min-height:28px}
+    .hero-left p{color:var(--muted);margin:12px 0 0 0;max-width:64ch}
+
+    .hero-right{min-width:220px;display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+    .cta{background:linear-gradient(90deg,var(--accent-red),#ff6b6b);color:white;padding:12px 16px;border-radius:12px;border:0;font-weight:900;cursor:pointer}
+    .small-muted{color:var(--muted);font-weight:700;font-size:13px;text-align:right}
+
+    .social-row{display:flex;gap:12px;align-items:center;margin-top:14px}
+    .social-btn{width:46px;height:46px;border-radius:10px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;border:1px solid rgba(255,255,255,0.03);transition:transform .18s}
     .social-btn:hover{transform:translateY(-4px);color:var(--text);background:rgba(255,255,255,0.04)}
 
-    /* SEE MORE button */
-    .see-more{margin-top:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:700}
+    .cta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    @media(max-width:880px){.cta-grid{grid-template-columns:1fr}}
+    .service-card{padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
 
-    /* Services quick CTA box */
-    .quick-cta{
-      margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;
-    }
-    .quick-cta .card{
-      min-width:220px;flex:1;border-radius:12px;padding:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.03);
-    }
-
-    /* Form section */
-    .form-section{
-      margin-top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
-    }
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    @media(max-width:880px){ .wrap{flex-direction:column;padding:18px} .left{width:68px} .left .bigname{writing-mode:vertical-rl; font-size:20px} .hero-left{max-width:100%} .grid{grid-template-columns:1fr} .hero-right{align-items:flex-start} }
-    label{display:block;font-weight:700;margin-bottom:6px}
-    input, select, textarea{
-      width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);outline:none;font-weight:600
-    }
+    .form-wrap{margin-top:22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media(max-width:880px){.form-grid{grid-template-columns:1fr}}
+    label{display:block;font-weight:700;margin-bottom:6px;color:var(--muted)}
+    input,select,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text);outline:none;font-weight:600}
     textarea{min-height:120px;resize:vertical}
-    .submit-row{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-top:12px}
-    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:800}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),#ff6b6b);color:white}
-    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    .form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:12px}
 
-    /* Toast */
-    .toast{position:fixed;right:20px;bottom:20px;background:linear-gradient(90deg,var(--accent),#ff6b6b);color:white;padding:12px 16px;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,0.5);opacity:0;transform:translateY(12px);transition:all .28s var(--ease);z-index:120}
+    .toast{position:fixed;right:20px;bottom:20px;padding:12px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent-red),#ff6b6b);color:#fff;z-index:260;opacity:0;transform:translateY(8px);transition:all .28s var(--ease)}
 
-    /* Chatbot UI */
-    .chat-toggle{position:fixed;right:20px;bottom:92px;background:linear-gradient(90deg,var(--accent-2),#7c3aed);width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:white;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,0.45);z-index:110}
-    .chat-panel{position:fixed;right:20px;bottom:160px;width:360px;max-width:90vw;border-radius:12px;background:linear-gradient(180deg,#071426 0%, #071024 100%);border:1px solid rgba(255,255,255,0.04);box-shadow:0 18px 48px rgba(0,0,0,0.6);z-index:110;padding:12px;display:none;flex-direction:column;gap:8px}
+    .chat-toggle{position:fixed;right:20px;bottom:90px;width:56px;height:56px;border-radius:999px;background:linear-gradient(90deg,var(--accent-2),#7c3aed);display:flex;align-items:center;justify-content:center;color:white;z-index:260;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
+    .chat-panel{position:fixed;right:20px;bottom:160px;width:360px;max-width:92vw;border-radius:12px;background:linear-gradient(180deg,#071426 0%, #071024 100%);border:1px solid rgba(255,255,255,0.03);box-shadow:0 18px 48px rgba(0,0,0,0.6);z-index:260;padding:12px;display:none;flex-direction:column;gap:8px}
     .chat-panel.open{display:flex}
     .chat-messages{max-height:320px;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:8px}
     .msg{padding:10px;border-radius:10px;max-width:80%;font-weight:600}
     .msg.user{align-self:flex-end;background:linear-gradient(90deg,#0b1220,#132033);color:var(--text)}
     .msg.bot{align-self:flex-start;background:linear-gradient(90deg,#081434,#0b1b32);color:var(--muted)}
     .chat-input{display:flex;gap:8px}
-    .chat-input input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)}
+    .chat-input input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)}
 
-    /* animated transparent car (low opacity) */
-    .bg-car{position:fixed;left:-40%;top:50%;width:220%;height:260px;pointer-events:none;opacity:0.06;filter:blur(6px);transform:translateY(-50%);z-index:1}
-    .car-svg{width:100%;height:100%;object-fit:cover;animation:carDrive 20s linear infinite}
-    @keyframes carDrive{
-      0%{transform:translateX(-4%)}
-      50%{transform:translateX(4%)}
-      100%{transform:translateX(-4%)}
-    }
-
-    /* small helpers */
-    .muted{color:var(--muted)}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media (max-width:640px){ .hero-left h1{font-size:28px} .top-left-name{left:10px;top:10px;padding:6px 10px} .car-image{display:none} .car-image.layer2{display:none} .car-image.layer3{display:none} }
   </style>
 </head>
 <body>
 
-  <!-- animated, transparent "cobra car" background (SVG silhouette) -->
-  <div class="bg-car" aria-hidden="true">
-    <svg class="car-svg" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <!-- stylized car silhouette (inspired by classic cobra) -->
-      <g fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" transform="scale(1.0)">
-        <path d="M40 180 C80 120 140 100 220 100 C320 100 440 120 540 140 C620 155 720 150 820 140 C880 133 920 140 960 170" stroke="#ffffff"/>
-        <path d="M60 190 C95 200 150 210 220 210 C320 210 440 200 540 190 C620 183 720 185 820 187 C900 189 940 185 980 175" stroke="#ffffff"/>
-        <path d="M200 120 C230 100 270 95 320 96 C380 97 420 110 480 120 C520 128 560 132 640 132" stroke="#ffffff"/>
-        <!-- wheels -->
-        <circle cx="260" cy="220" r="18" fill="#ffffff"/>
-        <circle cx="640" cy="220" r="18" fill="#ffffff"/>
-      </g>
-    </svg>
+  <!-- Background car image layers
+       Place the exact car image you provided into your repository at:
+       assets/cobra-car.jpg
+       (Or change the src attribute below to the image URL you want to use.)
+       Three layers are used with different speeds/blur to create depth. -->
+  <div class="bg-cobra" aria-hidden="true">
+    <img class="car-image layer3" src="assets/cobra-car.jpg" alt="" />
+    <img class="car-image layer2" src="assets/cobra-car.jpg" alt="" />
+    <img class="car-image"           src="assets/cobra-car.jpg" alt="" />
   </div>
 
-  <div class="wrap" role="main">
-    <!-- LEFT: Large vertical name -->
-    <div class="left" aria-hidden="false">
-      <div class="bigname" aria-hidden="true">
-        <span class="highlight">Prashanta</span>
-      </div>
-    </div>
+  <!-- Top-left clickable name -->
+  <button class="top-left-name" id="topNameBtn" aria-label="Home / reopen" title="Click to reopen">
+    <span class="name">Prashanta</span>
+    <span class="small muted">Subedi</span>
+  </button>
 
-    <!-- RIGHT: Main content -->
-    <div class="right">
-      <div class="top-options" role="navigation" aria-label="Top options">
-        <div class="option" onclick="scrollToForm()">GET Website / App</div>
-        <div class="option" onclick="toggleProfile()">About</div>
-        <div class="option" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Services</div>
-      </div>
-
-      <main class="hero-screen" aria-labelledby="hero-title">
+  <div class="container">
+    <main class="hero" role="main" aria-labelledby="hero-heading">
+      <section class="hero-card" aria-labelledby="hero-heading">
         <div class="hero-top">
           <div class="hero-left">
-            <div class="small muted">HI, It's</div>
-            <h1 id="hero-title">PRASHANTA</h1>
-            <div class="hi">I build things — <span class="rotator" id="rotator" aria-live="polite"></span></div>
-            <p id="lead" class="muted">I craft modern websites and mobile apps with attention to performance, accessibility and clean code. I also enjoy scripting, UX writing and product thinking.</p>
+            <div class="tagline">HI, It's</div>
+            <h1 id="hero-heading">PRASHANTA</h1>
+            <div class="rotator" id="rotator" aria-live="polite">script writer</div>
+            <p>I craft modern websites and mobile apps with attention to performance, accessibility and clean, maintainable code. I also enjoy product writing and UX-focused scripting.</p>
 
-            <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
-              <button class="see-more" onclick="toggleAbout()">See more</button>
-              <a class="social-btn" href="https://github.com/Prashantasubedi" target="_blank" rel="noopener" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.55-3.88-1.55-.53-1.36-1.3-1.72-1.3-1.72-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.76.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.21-1.5 3.18-1.18 3.18-1.18.63 1.57.23 2.73.11 3.02.74.81 1.19 1.84 1.19 3.1 0 4.43-2.71 5.41-5.29 5.68.42.36.79 1.08.79 2.17 0 1.57-.01 2.83-.01 3.21 0 .31.21.67.8.56C20.71 21.37 24 17.08 24 12 24 5.65 18.35.5 12 .5z"/></svg></a>
+            <div class="social-row" aria-label="Social links">
+              <a class="social-btn" href="https://github.com/Prashantasubedi" target="_blank" rel="noopener" aria-label="GitHub link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.55-3.88-1.55-.53-1.36-1.3-1.72-1.3-1.72-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.76.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.21-1.5 3.18-1.18 3.18-1.18.63 1.57.23 2.73.11 3.02.74.81 1.19 1.84 1.19 3.1 0 4.43-2.71 5.41-5.29 5.68.42.36.79 1.08.79 2.17 0 1.57-.01 2.83-.01 3.21 0 .31.21.67.8.56C20.71 21.37 24 17.08 24 12 24 5.65 18.35.5 12 .5z"/></svg>
+              </a>
 
-              <a class="social-btn" href="https://www.linkedin.com/in/prashanta-subedi-57425a39a/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4V8zm7.5 0h3.84v2.18h.05c.54-1.02 1.86-2.09 3.83-2.09 4.1 0 4.85 2.7 4.85 6.21V24H19V17.2c0-1.61-.03-3.69-2.25-3.69-2.25 0-2.59 1.75-2.59 3.56V24H7.99V8z"/></svg></a>
+              <a class="social-btn" href="https://www.linkedin.com/in/prashanta-subedi-57425a39a/" target="_blank" rel="noopener" aria-label="LinkedIn link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4V8zm7.5 0h3.84v2.18h.05c.54-1.02 1.86-2.09 3.83-2.09 4.1 0 4.85 2.7 4.85 6.21V24H19V17.2c0-1.61-.03-3.69-2.25-3.69-2.25 0-2.59 1.75-2.59 3.56V24H7.99V8z"/></svg>
+              </a>
 
-              <a class="social-btn" href="https://instagram.com/prashantasubedi2" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.16c3.2 0 3.584.012 4.85.07 1.17.055 1.95.24 2.406.403a4.9 4.9 0 011.7 1.03c.49.49.83 1.09 1.03 1.7.165.456.35 1.236.404 2.406.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.055 1.17-.24 1.95-.404 2.406a4.9 4.9 0 01-1.03 1.7 4.9 4.9 0 01-1.7 1.03c-.456.165-1.236.35-2.406.404-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.055-1.95-.24-2.406-.404a4.9 4.9 0 01-1.7-1.03 4.9 4.9 0 01-1.03-1.7c-.165-.456-.35-1.236-.404-2.406C2.172 15.584 2.16 15.2 2.16 12s.012-3.584.07-4.85c.055-1.17.24-1.95.404-2.406a4.9 4.9 0 011.03-1.7 4.9 4.9 0 011.7-1.03c.456-.165 1.236-.35 2.406-.404C8.416 2.172 8.8 2.16 12 2.16zm0 1.8c-3.157 0-3.526.012-4.773.069-1.03.052-1.588.23-1.96.383a3.12 3.12 0 00-1.13.737 3.12 3.12 0 00-.737 1.13c-.153.372-.33.93-.383 1.96-.057 1.247-.069 1.616-.069 4.773s.012 3.526.069 4.773c.052 1.03.23 1.588.383 1.96.173.441.403.82.737 1.13.31.334.689.564 1.13.737.372.153.93.33 1.96.383 1.247.057 1.616.069 4.773.069s3.526-.012 4.773-.069c1.03-.052 1.588-.23 1.96-.383a3.12 3.12 0 001.13-.737 3.12 3.12 0 00.737-1.13c.153-.372.33-.93.383-1.96.057-1.247.069-1.616.069-4.773s-.012-3.526-.069-4.773c-.052-1.03-.23-1.588-.383-1.96a3.12 3.12 0 00-.737-1.13 3.12 3.12 0 00-1.13-.737c-.372-.153-.93-.33-1.96-.383-1.247-.057-1.616-.069-4.773-.069zM12 6.84a5.16 5.16 0 100 10.32 5.16 5.16 0 000-10.32zm0 1.8a3.36 3.36 0 110 6.72 3.36 3.36 0 010-6.72zm5.1-1.98a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/></svg></a>
+              <a class="social-btn" href="https://instagram.com/prashantasubedi2" target="_blank" rel="noopener" aria-label="Instagram link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.16c3.2 0 3.584.012 4.85.07 1.17.055 1.95.24 2.406.403a4.9 4.9 0 011.7 1.03c.49.49.83 1.09 1.03 1.7.165.456.35 1.236.404 2.406.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.055 1.17-.24 1.95-.404 2.406a4.9 4.9 0 01-1.03 1.7 4.9 4.9 0 01-1.7 1.03c-.456.165-1.236.35-2.406.404-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.055-1.95-.24-2.406-.404a4.9 4.9 0 01-1.7-1.03 4.9 4.9 0 01-1.03-1.7c-.165-.456-.35-1.236-.404-2.406C2.172 15.584 2.16 15.2 2.16 12s.012-3.584.07-4.85c.055-1.17.24-1.95.404-2.406a4.9 4.9 0 011.03-1.7 4.9 4.9 0 011.7-1.03c.456-.165 1.236-.35 2.406-.404C8.416 2.172 8.8 2.16 12 2.16zm0 1.8c-3.157 0-3.526.012-4.773.069-1.03.052-1.588.23-1.96.383a3.12 3.12 0 00-1.13.737 3.12 3.12 0 00-.737 1.13c-.153.372-.33.93-.383 1.96-.057 1.247-.069 1.616-.069 4.773s.012 3.526.069 4.773c.052 1.03.23 1.588.383 1.96.173.441.403.82.737 1.13.31.334.689.564 1.13.737.372.153.93.33 1.96.383 1.247.057 1.616.069 4.773.069s3.526-.012 4.773-.069c1.03-.052 1.588-.23 1.96-.383a3.12 3.12 0 001.13-.737 3.12 3.12 0 00.737-1.13c.153-.372.33-.93.383-1.96.057-1.247.069-1.616.069-4.773s-.012-3.526-.069-4.773c-.052-1.03-.23-1.588-.383-1.96a3.12 3.12 0 00-.737-1.13 3.12 3.12 0 00-1.13-.737c-.372-.153-.93-.33-1.96-.383-1.247-.057-1.616-.069-4.773-.069zM12 6.84a5.16 5.16 0 100 10.32 5.16 5.16 0 000-10.32zm0 1.8a3.36 3.36 0 110 6.72 3.36 3.36 0 010-6.72zm5.1-1.98a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/></svg>
+              </a>
 
-              <a class="social-btn" href="mailto:prashantaasubedii@gmail.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 13.065L0 5.25V19a2 2 0 002 2h20a2 2 0 002-2V5.25L12 13.065zM12 11L24 3H0l12 8z"/></svg></a>
+              <a class="social-btn" href="mailto:prashantaasubedii@gmail.com" aria-label="Email link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 13.065L0 5.25V19a2 2 0 002 2h20a2 2 0 002-2V5.25L12 13.065zM12 11L24 3H0l12 8z"/></svg>
+              </a>
             </div>
           </div>
 
-          <div class="hero-right" aria-hidden="false">
-            <div class="cta-box">
-              <small>Need a pro website or app?</small>
-              <div style="display:flex;gap:8px;align-items:center">
-                <button class="cta-btn" onclick="scrollToForm()">GET Website / App</button>
-              </div>
-              <small style="opacity:.7">Fast estimates • Fixed-price or hourly • NDA available</small>
-            </div>
-            <div class="muted" style="text-align:right;font-weight:600">Based in Nepal — Remote work welcome</div>
-          </div>
-        </div>
-
-        <!-- About (collapsible) -->
-        <div id="aboutPanel" style="display:none;margin-top:6px;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.03)">
-          <p class="muted" style="margin:0 0 8px 0">
-            Hello, I'm Prashanta — a full‑stack developer focused on web & mobile experiences. I graduated from Balmiki and hold certifications in Python, HTML, PHP and Java. I build production-ready apps and help businesses ship value faster.
-          </p>
-          <button class="see-more" onclick="openMore()">See full profile</button>
-        </div>
-
-        <!-- quick services row -->
-        <div class="quick-cta" style="margin-top:12px">
-          <div class="card" id="services">
-            <h3 style="margin:0 0 6px 0">Website Development</h3>
-            <p class="muted" style="margin:0">Responsive, SEO-friendly, performant websites and landing pages.</p>
-          </div>
-          <div class="card">
-            <h3 style="margin:0 0 6px 0">Mobile Apps</h3>
-            <p class="muted" style="margin:0">Cross-platform apps with native feel using React Native or native toolchains.</p>
-          </div>
-          <div class="card">
-            <h3 style="margin:0 0 6px 0">Product & Consulting</h3>
-            <p class="muted" style="margin:0">Planning, UI/UX, MVPs and deployment support.</p>
+          <div class="hero-right">
+            <div class="cta" onclick="scrollToForm()">GET Website / App</div>
+            <div class="small-muted">Fast estimates • Fixed-price or hourly • NDA available</div>
           </div>
         </div>
-      </main>
 
-      <!-- Form / contact area -->
-      <section class="form-section" aria-labelledby="contact-title">
-        <h2 id="contact-title" style="margin:0 0 12px 0">Request a Project</h2>
-        <form id="projectForm" action="https://formspree.io/f/xovgolly" method="POST" novalidate>
-          <div class="grid">
-            <div>
-              <label for="name">Full name</label>
-              <input id="name" name="name" type="text" placeholder="Your name" required>
-            </div>
-            <div>
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" placeholder="you@company.com" required>
-            </div>
-            <div>
-              <label for="company">Company (optional)</label>
-              <input id="company" name="company" type="text" placeholder="Company or product name">
-            </div>
-            <div>
-              <label for="phone">Phone (optional)</label>
-              <input id="phone" name="phone" type="tel" placeholder="+977 ...">
-            </div>
-            <div>
-              <label for="project_type">Project type</label>
-              <select id="project_type" name="project_type" required>
-                <option value="">Select</option>
-                <option>Website</option>
-                <option>Mobile App</option>
-                <option>Both</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div>
-              <label for="budget">Estimated budget</label>
-              <input id="budget" name="budget" type="text" placeholder="e.g. $2k - $10k">
-            </div>
-            <div style="grid-column:1 / -1">
-              <label for="message">Project brief & goals</label>
-              <textarea id="message" name="message" placeholder="Describe the project, users and goals..." required></textarea>
-            </div>
+        <div class="cta-grid" role="region" aria-label="Quick services">
+          <div class="service-card"><strong>Website</strong><div class="muted">Responsive marketing & product sites</div></div>
+          <div class="service-card"><strong>Mobile App</strong><div class="muted">React Native & native apps</div></div>
+          <div class="service-card"><strong>Consulting</strong><div class="muted">MVPs, product and UX</div></div>
+        </div>
 
-            <div style="grid-column:1 / -1;display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:6px;flex-wrap:wrap">
-              <div class="muted" style="font-size:14px">I'll reply within 48 hours — or email: <a href="mailto:prashantaasubedii@gmail.com" class="muted" style="text-decoration:underline">prashantaasubedii@gmail.com</a></div>
-              <div style="display:flex;gap:8px">
-                <button type="reset" class="btn btn-outline">Reset</button>
-                <button type="submit" class="btn btn-primary">Send Request</button>
-              </div>
-            </div>
-          </div>
-        </form>
+        <div style="margin-top:16px;display:flex;justify-content:flex-end">
+          <button class="see-more" onclick="scrollToForm()">Get a quote →</button>
+        </div>
       </section>
+    </main>
 
-    </div>
+    <!-- contact form -->
+    <section class="form-wrap" aria-labelledby="contact-title">
+      <h2 id="contact-title">Request a Project</h2>
+      <form id="projectForm" action="https://formspree.io/f/xovgolly" method="POST" novalidate>
+        <div class="form-grid">
+          <div>
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@company.com" required>
+          </div>
+          <div>
+            <label for="company">Company (optional)</label>
+            <input id="company" name="company" type="text" placeholder="Company or product name">
+          </div>
+          <div>
+            <label for="phone">Phone (optional)</label>
+            <input id="phone" name="phone" type="tel" placeholder="+977 ...">
+          </div>
+          <div>
+            <label for="project_type">Project type</label>
+            <select id="project_type" name="project_type" required>
+              <option value="">Select</option>
+              <option>Website</option>
+              <option>Mobile App</option>
+              <option>Both</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="budget">Estimated budget</label>
+            <input id="budget" name="budget" type="text" placeholder="e.g. $2k - $10k">
+          </div>
+
+          <div style="grid-column:1 / -1">
+            <label for="message">Project brief & goals</label>
+            <textarea id="message" name="message" placeholder="Describe the project, users and goals..." required></textarea>
+          </div>
+
+          <div style="grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;margin-top:6px;flex-wrap:wrap">
+            <div class="muted">I'll reply within 48 hours — or email: <a href="mailto:prashantaasubedii@gmail.com" class="muted" style="text-decoration:underline">prashantaasubedii@gmail.com</a></div>
+            <div class="form-actions">
+              <button type="reset" class="btn btn-outline">Reset</button>
+              <button type="submit" class="btn btn-primary">Send Request</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
   </div>
 
-  <!-- Chatbot -->
+  <!-- Chat -->
   <div class="chat-toggle" id="chatToggle" title="Ask me anything" onclick="toggleChat()">💬</div>
   <div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask Prashanta anything">
     <div style="display:flex;justify-content:space-between;align-items:center">
@@ -312,128 +258,65 @@
       <input id="chatInput" placeholder="Ask about pricing, timeline, tech stack..." />
       <button class="btn btn-primary" onclick="sendChat()">Send</button>
     </div>
-    <small class="muted">Note: This is an on-site assistant. For bigger questions, please use the form or email me.</small>
+    <small class="muted">Note: on-site assistant — use the form for detailed requests.</small>
   </div>
 
-  <!-- Toast -->
   <div id="toast" class="toast" role="status" aria-live="polite">Message sent — I will get back to you.</div>
 
   <script>
-    // ROTATOR (typed-like but simple rotate)
-    (function rotator(){
+    // rotator
+    (function(){
       const words = ['script writer','full‑stack developer','product thinker','app maker','UX-minded dev'];
       let i = 0, el = document.getElementById('rotator');
       if(!el) return;
-      function show(){
-        el.style.opacity = 0; // fade out
-        setTimeout(()=>{
-          el.textContent = words[i];
-          el.style.opacity = 1;
-          i = (i+1)%words.length;
-          setTimeout(show, 2000);
-        },220);
-      }
-      show();
+      function next(){ el.style.opacity = 0; setTimeout(()=>{ el.textContent = words[i]; el.style.opacity = 1; i=(i+1)%words.length; },220); }
+      next(); setInterval(next, 2600);
     })();
 
-    // ABOUT toggle
-    function toggleAbout(){
-      const panel = document.getElementById('aboutPanel');
-      panel.style.display = (panel.style.display === 'none' || !panel.style.display) ? 'block' : 'none';
-    }
-    function openMore(){
-      window.alert('Full profile: Graduated from Balmiki. Certified in Python, HTML, PHP, Java. Contact for detailed CV or portfolio.');
-    }
+    // top-left name click: reload (reopen) and scroll top
+    document.getElementById('topNameBtn').addEventListener('click', function(){
+      this.animate([{transform:'scale(1)'},{transform:'scale(0.98)'},{transform:'scale(1)'}], {duration:220});
+      window.scrollTo({top:0,behavior:'smooth'});
+      setTimeout(()=>{ location.reload(); }, 420);
+    });
 
-    // Scroll to form
-    function scrollToForm(){
-      const el = document.getElementById('projectForm');
-      if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
-      // focus first input
-      setTimeout(()=>document.getElementById('name')?.focus(),500);
-    }
+    // scroll to form
+    function scrollToForm(){ const el = document.getElementById('projectForm'); if(el) el.scrollIntoView({behavior:'smooth', block:'center'}); setTimeout(()=>document.getElementById('name')?.focus(),600); }
 
-    // PROFILE toggle (top option)
-    function toggleProfile(){
-      const panel = document.getElementById('aboutPanel');
-      panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
-      if(panel.style.display === 'block') panel.scrollIntoView({behavior:'smooth', block:'center'});
-    }
+    // simple chat
+    window.toggleChat = function(){ document.getElementById('chatPanel').classList.toggle('open'); };
+    window.sendChat = function(){
+      const input = document.getElementById('chatInput'); const text = input.value && input.value.trim(); if(!text) return;
+      appendMsg(text, 'user'); input.value = '';
+      let reply = "Thanks — I'll reply by email. Use the form for full details.";
+      const t = text.toLowerCase();
+      if(t.includes('price')||t.includes('cost')) reply = "Websites start around $800, apps from $2k+. Exact quote after scope.";
+      else if(t.includes('timeline')||t.includes('how long')) reply = "Small sites: 1–3 weeks. Apps: 6–12 weeks depending on scope.";
+      else if(t.includes('stack')||t.includes('tech')) reply = "I use React, React Native, Node.js, TypeScript and Python when needed.";
+      setTimeout(()=>appendMsg(reply,'bot'),700);
+    };
+    function appendMsg(text, who){ const c = document.getElementById('chatMessages'); const el = document.createElement('div'); el.className = 'msg ' + (who==='user'?'user':'bot'); el.textContent = text; c.appendChild(el); c.scrollTop = c.scrollHeight; }
 
-    // Form submit with fetch to Formspree
+    // send form to Formspree
     (function(){
-      const form = document.getElementById('projectForm');
-      const toast = document.getElementById('toast');
+      const form = document.getElementById('projectForm'), toast = document.getElementById('toast');
       if(!form) return;
-      form.addEventListener('submit', async (e)=>{
+      form.addEventListener('submit', async e => {
         e.preventDefault();
         const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
-        const data = new FormData(form);
-        // optional: add source
-        data.append('_subject','Website request from portfolio');
+        submitBtn.disabled = true; submitBtn.textContent = 'Sending...';
+        const data = new FormData(form); data.append('_subject','Website request from portfolio');
         try{
-          const res = await fetch(form.action, { method:'POST', body: data, headers:{ 'Accept':'application/json' }});
-          if(res.ok){
-            showToast('Thanks! Your request was sent — I will reply soon.');
-            form.reset();
-          } else {
-            showToast('Submission failed — please email me at prashantaasubedii@gmail.com');
-          }
-        } catch(err){
-          showToast('Network error — try again or email prashantaasubedii@gmail.com');
-        } finally{
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Request';
-        }
+          const res = await fetch(form.action, { method:'POST', body: data, headers: { 'Accept': 'application/json' }});
+          if(res.ok){ showToast('Thanks! Your request was sent — I will reply soon.'); form.reset(); }
+          else { showToast('Submission failed — please email prashantaasubedii@gmail.com'); }
+        } catch(err){ showToast('Network error — try again or email prashantaasubedii@gmail.com'); }
+        finally{ submitBtn.disabled = false; submitBtn.textContent = 'Send Request'; }
       });
-
-      function showToast(msg){
-        toast.textContent = msg;
-        toast.style.opacity = 1;
-        toast.style.transform = 'translateY(0)';
-        setTimeout(()=>{ toast.style.opacity = 0; toast.style.transform = 'translateY(12px)'; },4200);
-      }
+      function showToast(msg){ toast.textContent = msg; toast.style.opacity = 1; toast.style.transform = 'translateY(0)'; setTimeout(()=>{ toast.style.opacity = 0; toast.style.transform = 'translateY(8px)'; },4200); }
     })();
 
-    // Simple site chatbot (rule-based)
-    (function(){
-      window.toggleChat = function(){
-        const panel = document.getElementById('chatPanel');
-        panel.classList.toggle('open');
-      };
-      window.sendChat = function(){
-        const input = document.getElementById('chatInput');
-        const msg = input.value && input.value.trim();
-        if(!msg) return;
-        appendMessage(msg, 'user');
-        input.value = '';
-        // basic keyword responses
-        const text = msg.toLowerCase();
-        let reply = "Thanks — I'll get back to you via email. You can also book a call.";
-        if(text.includes('price') || text.includes('cost') || text.includes('budget')) reply = "Typical websites start at $800; apps start at $2k. Exact quote after scope.";
-        else if(text.includes('timeline') || text.includes('how long')) reply = "Small websites: ~1–3 weeks. Apps: 6–12 weeks depending on complexity.";
-        else if(text.includes('stack') || text.includes('tech')) reply = "I use React, React Native, Node.js, and TypeScript. Python where needed.";
-        else if(text.includes('hire') || text.includes('work')) reply = "Great — please use the form or email prashantaasubedii@gmail.com and I'll reply within 48 hours.";
-        else if(text.includes('portfolio') || text.includes('projects')) reply = "You can find my work on GitHub and LinkedIn (links on the page).";
-
-        // simulate typing delay
-        setTimeout(()=> appendMessage(reply, 'bot'), 700);
-      };
-
-      function appendMessage(text, who){
-        const container = document.getElementById('chatMessages');
-        const el = document.createElement('div');
-        el.className = 'msg ' + (who === 'user' ? 'user' : 'bot');
-        el.textContent = text;
-        container.appendChild(el);
-        container.scrollTop = container.scrollHeight;
-      }
-    })();
-
-    // small accessibility: close chat on ESC
-    document.addEventListener('keydown', e => { if(e.key === 'Escape'){ document.getElementById('chatPanel').classList.remove('open'); }});
+    document.addEventListener('keydown', e => { if(e.key==='Escape') document.getElementById('chatPanel').classList.remove('open'); });
   </script>
 </body>
 </html>
