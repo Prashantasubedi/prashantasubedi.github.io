@@ -124,31 +124,33 @@
 <body>
   <!--
     Advanced background setup:
-    - For best results, add optimized images to your repo:
-      assets/cobra-600.webp, assets/cobra-1200.webp, assets/cobra-2000.webp
-      and JPEG fallbacks: assets/cobra-600.jpg, assets/cobra-1200.jpg, assets/cobra-2000.jpg
-    - The code below uses <picture> with webp/jpg srcset for responsive loading and lazy-inits them.
+    - Please ensure the following files are present in your repo under the assets/ folder:
+      assets/cobra-600.webp
+      assets/cobra-1200.webp
+      assets/cobra-2000.webp
+
+    - The code below uses these webp files and lazy-loads them for fast first paint.
   -->
 
   <div class="bg-cobra" aria-hidden="true" id="bgCobra">
     <div class="bg-layer layer1" data-depth="0.12">
       <picture>
         <source type="image/webp" srcset="assets/cobra-600.webp 600w, assets/cobra-1200.webp 1200w, assets/cobra-2000.webp 2000w" sizes="(max-width:600px) 600px, (max-width:1200px) 1200px, 2000px">
-        <img data-src="assets/cobra-1200.jpg" alt="" class="bg-img lazy" loading="lazy" width="2000" height="600">
+        <img data-src="assets/cobra-1200.webp" alt="" class="bg-img lazy" loading="lazy" width="2000" height="600">
       </picture>
     </div>
 
     <div class="bg-layer layer2" data-depth="0.06">
       <picture>
         <source type="image/webp" srcset="assets/cobra-600.webp 600w, assets/cobra-1200.webp 1200w, assets/cobra-2000.webp 2000w" sizes="(max-width:600px) 600px, (max-width:1200px) 1200px, 2000px">
-        <img data-src="assets/cobra-1200.jpg" alt="" class="bg-img lazy" loading="lazy" width="2000" height="600">
+        <img data-src="assets/cobra-1200.webp" alt="" class="bg-img lazy" loading="lazy" width="2000" height="600">
       </picture>
     </div>
 
     <div class="bg-layer layer3" data-depth="0.02">
       <picture>
         <source type="image/webp" srcset="assets/cobra-600.webp 600w, assets/cobra-1200.webp 1200w, assets/cobra-2000.webp 2000w" sizes="(max-width:600px) 600px, (max-width:1200px) 1200px, 2000px">
-        <img data-src="assets/cobra-1200.jpg" alt="" class="bg-img lazy" loading="lazy" width="2000" height="600">
+        <img data-src="assets/cobra-1200.webp" alt="" class="bg-img lazy" loading="lazy" width="2000" height="600">
       </picture>
     </div>
   </div>
@@ -283,8 +285,7 @@
        - Uses data-src in <img> and loads actual images when visible.
        - Expects you to place optimized images at:
          assets/cobra-600.webp, assets/cobra-1200.webp, assets/cobra-2000.webp
-         assets/cobra-600.jpg,  assets/cobra-1200.jpg,  assets/cobra-2000.jpg
-       - If you prefer different filenames, update the <source> / data-src values above.
+       - If filenames differ, update the srcset/data-src values above.
     */
     (function lazyLoadBg(){
       if('IntersectionObserver' in window){
@@ -352,10 +353,6 @@
         layers.forEach((layer, i) => {
           const depth = parseFloat(layer.dataset.depth || 0.05) * (i + 1);
           const offset = (s - lastScroll) * depth * 0.1;
-          // apply tiny translateY to layer to create depth on scroll
-          // combine with existing transform if present
-          // keep safe by parsing current transform using previous set properties
-          // for simplicity we'll set translateY relative to scroll
           layer.style.transform = layer.style.transform ? layer.style.transform + ` translateY(${offset}px)` : `translateX(-50%) translateY(${offset}px)`;
         });
         lastScroll = s;
