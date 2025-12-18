@@ -17,7 +17,7 @@
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Google Analytics (gtag.js) - Using your Measurement ID -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-S30R3Z9MYJ"></script>
@@ -1045,6 +1045,451 @@
       }
     }
 
+    /* AI Chat Styles - Modern Z.ai Style */
+    .ai-chat-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      z-index: 70;
+      transition: var(--transition);
+    }
+
+    .ai-chat-button:hover {
+      transform: scale(1.05);
+    }
+
+    .ai-chat-button svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+
+    .ai-chat-container {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 380px;
+      height: 500px;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      z-index: 70;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(20px);
+      visibility: hidden;
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .ai-chat-container.active {
+      opacity: 1;
+      transform: none;
+      visibility: visible;
+    }
+
+    .ai-chat-header {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+      padding: 16px;
+      border-radius: 16px 16px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ai-chat-close {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .ai-chat-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ai-message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      word-wrap: break-word;
+    }
+
+    .ai-message.user {
+      align-self: flex-end;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+    }
+
+    .ai-message.bot {
+      align-self: flex-start;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .ai-chat-input-container {
+      padding: 16px;
+      border-top: 1px solid rgba(11, 18, 32, 0.1);
+      display: flex;
+      gap: 8px;
+    }
+
+    [data-theme="dark"] .ai-chat-input-container {
+      border-top-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .ai-chat-input-wrapper {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      border-radius: 24px;
+      border: 1px solid rgba(11, 18, 32, 0.1);
+      [data-theme="dark"] & {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .ai-chat-input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 24px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+    }
+
+    .ai-chat-tools {
+      display: flex;
+      gap: 8px;
+      margin-left: 8px;
+    }
+
+    .ai-chat-tool-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      color: var(--muted);
+    }
+
+    .ai-chat-tool-btn:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .ai-chat-tool-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .ai-chat-send {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .ai-chat-send:hover {
+      transform: scale(1.05);
+    }
+
+    .ai-chat-send svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+
+    .ai-chat-typing {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 16px;
+      background: var(--bg);
+      border-radius: 18px;
+      width: fit-content;
+    }
+
+    .ai-chat-typing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: typingDot 1.4s infinite ease-in-out;
+    }
+
+    .ai-chat-typing-dot:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    .ai-chat-typing-dot:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes typingDot {
+      0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* AI Project Assistant Button */
+    .ai-project-assistant-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 1rem;
+    }
+
+    .ai-project-assistant-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ai-project-assistant-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+
+    /* Modal for AI Assistant */
+    .ai-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .ai-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .ai-modal-content {
+      background: var(--card);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px);
+      transition: var(--transition);
+    }
+
+    .ai-modal.active .ai-modal-content {
+      transform: none;
+    }
+
+    .ai-modal-header {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+      padding: 16px;
+      border-radius: 16px 16px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ai-modal-close {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .ai-modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .ai-modal-body {
+      padding: 20px;
+    }
+
+    .ai-modal-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .ai-modal-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .ai-modal-step-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .ai-modal-step-content {
+      flex: 1;
+    }
+
+    .ai-modal-step-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .ai-modal-step-description {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .ai-modal-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .ai-modal-option {
+      padding: 12px;
+      border: 1px solid rgba(11, 18, 32, 0.1);
+      border-radius: 8px;
+      background: transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    [data-theme="dark"] .ai-modal-option {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .ai-modal-option:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+
+    .ai-modal-option.selected {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+
+    .ai-modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    /* File upload styling */
+    .file-upload {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .file-upload input[type=file] {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .file-upload-label {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .file-upload-label:hover {
+      background: var(--accent);
+      color: white;
+    }
+
     /* Media queries for responsive design */
     @media (max-width: 1200px) {
       .car-animation-container {
@@ -1061,6 +1506,21 @@
         bottom: 1%;
         right: 2%;
         opacity: 0.7;
+      }
+      
+      .ai-chat-container {
+        width: calc(100vw - 40px);
+        right: 20px;
+        left: 20px;
+        height: 400px;
+      }
+      
+      .ai-modal-content {
+        width: 95%;
+      }
+      
+      .ai-modal-options {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -1170,7 +1630,7 @@
           <div style="color:var(--muted)">Remote — open to freelance & contract work</div>
         </div>
 
-        <!-- keep full profile panel (optional) but removed the right-side profile card as requested -->
+        <!-- keep full profile panel (optional) but removed right-side profile card as requested -->
         <div id="profileFull" class="profile-full" aria-hidden="true">
           <h3 style="margin-top:0;color:var(--text)">Full profile</h3>
           <div class="list">
@@ -1303,6 +1763,16 @@
             <button type="reset" class="btn-outline">Reset</button>
           </div>
         </div>
+        
+        <!-- AI Project Assistant Button -->
+        <div style="grid-column:1 / -1;display:flex;justify-content:center;margin-top:1rem">
+          <button type="button" class="ai-project-assistant-btn" id="aiProjectAssistantBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            AI Project Assistant
+          </button>
+        </div>
       </form>
     </section>
   </main>
@@ -1323,7 +1793,7 @@
         </a>
         <a href="https://instagram.com/prashantasubedi2" target="_blank" rel="noopener" aria-label="Instagram" class="social-link instagram">
           <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 1.699-4.919 4.92-.057 1.281-.059 1.689-.073 4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
           </svg>
         </a>
         <button class="mail-me-btn social-link email" type="button" aria-label="Email">
@@ -1341,7 +1811,121 @@
     <span id="toastIcon" style="margin-left: 8px;">✓</span>
   </div>
 
+  <!-- AI Chat Button with Modern Z.ai Style -->
+  <div class="ai-chat-button" id="aiChatButton">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+      <path d="M6 9h12M6 13h8"/>
+    </svg>
+  </div>
+
+  <!-- AI Chat Container -->
+  <div class="ai-chat-container" id="aiChatContainer">
+    <div class="ai-chat-header">
+      <div>AI Assistant</div>
+      <button class="ai-chat-close" id="aiChatClose">×</button>
+    </div>
+    
+    <div class="ai-chat-messages" id="aiChatMessages">
+      <div class="ai-message bot">Hi! I'm Prashant's AI assistant. I can help you with project ideas, analyze images or websites, and answer questions about his services. How can I help you today?</div>
+    </div>
+    
+    <div class="ai-chat-input-container">
+      <div class="ai-chat-input-wrapper">
+        <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Type your message...">
+        <div class="ai-chat-tools">
+          <button class="ai-chat-tool-btn" id="imageUploadBtn" title="Upload Image">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 15"></polyline>
+            </svg>
+          </button>
+          <button class="ai-chat-tool-btn" id="websiteAnalysisBtn" title="Analyze Website">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 22 9.27 17 15.09 8.26 12 2"></polygon>
+            </svg>
+          </button>
+          <button class="ai-chat-tool-btn" id="projectAssistantBtn" title="Project Assistant">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button class="ai-chat-send" id="aiChatSend">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Hidden file input for image upload -->
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+  </div>
+
+  <!-- AI Project Assistant Modal -->
+  <div class="ai-modal" id="aiModal">
+    <div class="ai-modal-content">
+      <div class="ai-modal-header">
+        <div>AI Project Assistant</div>
+        <button class="ai-modal-close" id="aiModalClose">×</button>
+      </div>
+      <div class="ai-modal-body">
+        <div class="ai-modal-steps">
+          <div class="ai-modal-step">
+            <div class="ai-modal-step-number">1</div>
+            <div class="ai-modal-step-content">
+              <div class="ai-modal-step-title">Project Type</div>
+              <div class="ai-modal-step-description">What type of project are you looking to create?</div>
+              <div class="ai-modal-options">
+                <div class="ai-modal-option" data-value="Website">Website</div>
+                <div class="ai-modal-option" data-value="Mobile App">Mobile App</div>
+                <div class="ai-modal-option" data-value="Branding / Marketing">Branding / Marketing</div>
+                <div class="ai-modal-option" data-value="Other">Other</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="ai-modal-step">
+            <div class="ai-modal-step-number">2</div>
+            <div class="ai-modal-step-content">
+              <div class="ai-modal-step-title">Project Details</div>
+              <div class="ai-modal-step-description">Tell me more about your project requirements</div>
+              <textarea id="projectDetails" style="width:100%;min-height:100px;padding:10px;border:1px solid rgba(11, 18, 32, 0.1);border-radius:8px;background:transparent;color:var(--text);resize:vertical;" placeholder="Describe your project requirements..."></textarea>
+            </div>
+          </div>
+          
+          <div class="ai-modal-step">
+            <div class="ai-modal-step-number">3</div>
+            <div class="ai-modal-step-content">
+              <div class="ai-modal-step-title">Timeline & Budget</div>
+              <div class="ai-modal-step-description">What's your expected timeline and budget?</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <input type="text" id="projectTimeline" style="padding:10px;border:1px solid rgba(11, 18, 32, 0.1);border-radius:8px;background:transparent;color:var(--text);" placeholder="Expected timeline">
+                <input type="text" id="projectBudget" style="padding:10px;border:1px solid rgba(11, 18, 32, 0.1);border-radius:8px;background:transparent;color:var(--text);" placeholder="Budget range">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="ai-modal-actions">
+          <button class="btn-outline" id="aiModalCancel">Cancel</button>
+          <button class="btn-primary" id="aiModalGenerate">Generate Project Plan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Z.AI API Configuration
+    const ZAI_API_KEY = 'f6838631099f422cba210f5189211295.M3f9Yt3Xvq31RHDh';
+    const ZAI_API_URL = 'https://api.z.ai/api/paas/v4/chat/completions';
+
     // Theme toggle functionality
     (function() {
       const themeToggle = document.getElementById('themeToggle');
@@ -1401,7 +1985,8 @@
         'React & React Native',
         'Performance & Accessibility',
         'Business-ready apps',
-        'Design → Code → Ship'
+        'Design → Code → Ship',
+        'AI-Powered Solutions'
       ];
       const el = document.getElementById('typedText');
       if (!el) return;
@@ -1542,6 +2127,373 @@
           toast.classList.remove('show');
         }, 4200);
       }
+    })();
+
+    // AI Chat Functionality
+    (function() {
+      const aiChatButton = document.getElementById('aiChatButton');
+      const aiChatContainer = document.getElementById('aiChatContainer');
+      const aiChatClose = document.getElementById('aiChatClose');
+      const aiChatMessages = document.getElementById('aiChatMessages');
+      const aiChatInput = document.getElementById('aiChatInput');
+      const aiChatSend = document.getElementById('aiChatSend');
+      const imageUploadBtn = document.getElementById('imageUploadBtn');
+      const websiteAnalysisBtn = document.getElementById('websiteAnalysisBtn');
+      const projectAssistantBtn = document.getElementById('projectAssistantBtn');
+      const imageInput = document.getElementById('imageInput');
+      
+      // Toggle chat container
+      aiChatButton.addEventListener('click', () => {
+        aiChatContainer.classList.add('active');
+        aiChatInput.focus();
+      });
+      
+      aiChatClose.addEventListener('click', () => {
+        aiChatContainer.classList.remove('active');
+      });
+      
+      // Send message function
+      const sendMessage = async () => {
+        const message = aiChatInput.value.trim();
+        if (!message) return;
+        
+        // Add user message to chat
+        addMessageToChat(message, 'user');
+        aiChatInput.value = '';
+        
+        // Show typing indicator
+        showTypingIndicator();
+        
+        try {
+          // Call Z.AI API
+          const response = await fetch(ZAI_API_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${ZAI_API_KEY}`
+            },
+            body: JSON.stringify({
+              model: 'glm-4.5-flash',
+              messages: [
+                {
+                  role: 'system',
+                  content: 'You are a helpful AI assistant for Prashanta Subedi, a web and app developer. You help visitors with questions about his services, project ideas, and technical advice. Be friendly, professional, and concise. If you don\'t know something, be honest about it.'
+                },
+                {
+                  role: 'user',
+                  content: message
+                }
+              ],
+              temperature: 0.7,
+              max_tokens: 800
+            })
+          });
+          
+          const data = await response.json();
+          removeTypingIndicator();
+          
+          if (data.choices && data.choices.length > 0) {
+            const aiResponse = data.choices[0].message.content;
+            addMessageToChat(aiResponse, 'bot');
+          } else {
+            addMessageToChat('Sorry, I encountered an error. Please try again later.', 'bot');
+          }
+        } catch (error) {
+          removeTypingIndicator();
+          addMessageToChat('Sorry, I encountered an error. Please try again later.', 'bot');
+          console.error('AI API Error:', error);
+        }
+      };
+      
+      // Add message to chat
+      const addMessageToChat = (message, sender) => {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('ai-message', sender);
+        messageElement.textContent = message;
+        aiChatMessages.appendChild(messageElement);
+        aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+      };
+      
+      // Show typing indicator
+      const showTypingIndicator = () => {
+        const typingElement = document.createElement('div');
+        typingElement.classList.add('ai-chat-typing');
+        typingElement.id = 'typing-indicator';
+        typingElement.innerHTML = `
+          <div class="ai-chat-typing-dot"></div>
+          <div class="ai-chat-typing-dot"></div>
+          <div class="ai-chat-typing-dot"></div>
+        `;
+        aiChatMessages.appendChild(typingElement);
+        aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+      };
+      
+      // Remove typing indicator
+      const removeTypingIndicator = () => {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+          typingIndicator.remove();
+        }
+      };
+      
+      // Event listeners
+      aiChatSend.addEventListener('click', sendMessage);
+      aiChatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+      
+      // Image upload functionality
+      imageUploadBtn.addEventListener('click', () => {
+        imageInput.click();
+      });
+      
+      imageInput.addEventListener('change', async (e) => {
+        if (!e.target.files.length) return;
+        
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = async (event) => {
+          const base64Image = event.target.result.split(',')[1];
+          
+          // Add user message to chat
+          addMessageToChat('Uploaded an image for analysis', 'user');
+          
+          // Show typing indicator
+          showTypingIndicator();
+          
+          try {
+            const response = await fetch(ZAI_API_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ZAI_API_KEY}`
+              },
+              body: JSON.stringify({
+                model: 'glm-4.6v-flash',
+                messages: [
+                  {
+                    role: 'system',
+                    content: 'You are an AI assistant that analyzes images for web and app development purposes. Describe what you see in the image and provide suggestions for how it could be implemented in a website or app.'
+                  },
+                  {
+                    role: 'user',
+                    content: [
+                      {
+                        type: 'text',
+                        text: 'Analyze this image and provide insights for web/app development.'
+                      },
+                      {
+                        type: 'image_url',
+                        image_url: {
+                          url: `data:image/jpeg;base64,${base64Image}`
+                        }
+                      }
+                    ]
+                  }
+                ],
+                temperature: 0.7,
+                max_tokens: 800
+              })
+            });
+            
+            const data = await response.json();
+            removeTypingIndicator();
+            
+            if (data.choices && data.choices.length > 0) {
+              const analysis = data.choices[0].message.content;
+              addMessageToChat(analysis, 'bot');
+            } else {
+              addMessageToChat('Sorry, I encountered an error analyzing the image. Please try again.', 'bot');
+            }
+          } catch (error) {
+            removeTypingIndicator();
+            addMessageToChat('Sorry, I encountered an error analyzing the image. Please try again.', 'bot');
+            console.error('Image Analysis Error:', error);
+          }
+        };
+        
+        reader.readAsDataURL(file);
+      });
+      
+      // Website analysis functionality
+      websiteAnalysisBtn.addEventListener('click', () => {
+        addMessageToChat('I want to analyze a website', 'user');
+        
+        // Show typing indicator
+        showTypingIndicator();
+        
+        setTimeout(() => {
+          removeTypingIndicator();
+          addMessageToChat('Sure! Please provide the URL of the website you\'d like me to analyze.', 'bot');
+        }, 1000);
+      });
+      
+      // Project assistant functionality
+      projectAssistantBtn.addEventListener('click', () => {
+        // Open the AI Project Assistant modal
+        document.getElementById('aiModal').classList.add('active');
+      });
+    })();
+
+    // AI Project Assistant Modal
+    (function() {
+      const aiModal = document.getElementById('aiModal');
+      const aiModalClose = document.getElementById('aiModalClose');
+      const aiModalCancel = document.getElementById('aiModalCancel');
+      const aiModalGenerate = document.getElementById('aiModalGenerate');
+      const projectTypeOptions = document.querySelectorAll('.ai-modal-option');
+      const projectDetails = document.getElementById('projectDetails');
+      const projectTimeline = document.getElementById('projectTimeline');
+      const projectBudget = document.getElementById('projectBudget');
+      
+      // Close modal
+      aiModalClose.addEventListener('click', () => {
+        aiModal.classList.remove('active');
+      });
+      
+      aiModalCancel.addEventListener('click', () => {
+        aiModal.classList.remove('active');
+      });
+      
+      // Select project type
+      projectTypeOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          projectTypeOptions.forEach(opt => opt.classList.remove('selected'));
+          option.classList.add('selected');
+        });
+      });
+      
+      // Generate project plan
+      aiModalGenerate.addEventListener('click', async () => {
+        const selectedType = document.querySelector('.ai-modal-option.selected');
+        const projectType = selectedType ? selectedType.getAttribute('data-value') : '';
+        const details = projectDetails.value.trim();
+        const timeline = projectTimeline.value.trim();
+        const budget = projectBudget.value.trim();
+        
+        if (!projectType || !details) {
+          showToast('Please select a project type and provide details', 'error');
+          return;
+        }
+        
+        // Show loading state
+        aiModalGenerate.disabled = true;
+        aiModalGenerate.innerHTML = '<span class="spinner"></span> Generating...';
+        
+        try {
+          const response = await fetch(ZAI_API_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${ZAI_API_KEY}`
+            },
+            body: JSON.stringify({
+              model: 'glm-4.5-flash',
+              messages: [
+                {
+                  role: 'system',
+                  content: 'You are an AI assistant that helps with project planning for web and app development. Based on user\'s input, generate a comprehensive project description that can be used in a project request form. Include technical requirements, features, and implementation approach.'
+                },
+                {
+                  role: 'user',
+                  content: `Generate a project description for a ${projectType} with the following details: ${details}. Timeline: ${timeline}. Budget: ${budget}.`
+                }
+              ],
+              temperature: 0.7,
+              max_tokens: 800
+            })
+          });
+          
+          const data = await response.json();
+          
+          if (data.choices && data.choices.length > 0) {
+            const projectDescription = data.choices[0].message.content;
+            
+            // Fill the form with generated content
+            document.getElementById('project_type').value = projectType;
+            document.getElementById('message').value = projectDescription;
+            document.getElementById('budget').value = budget;
+            
+            // Close modal
+            aiModal.classList.remove('active');
+            
+            // Scroll to the form
+            document.getElementById('request').scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+            
+            // Show success message
+            showToast('Project plan generated and added to your request form!', 'success');
+          } else {
+            showToast('Sorry, I encountered an error generating the project plan. Please try again.', 'error');
+          }
+        } catch (error) {
+          showToast('Sorry, I encountered an error generating the project plan. Please try again.', 'error');
+          console.error('Project Plan Error:', error);
+        } finally {
+          // Reset button state
+          aiModalGenerate.disabled = false;
+          aiModalGenerate.textContent = 'Generate Project Plan';
+        }
+      });
+    })();
+
+    // Auto-fill project form based on project type
+    (function() {
+      const projectTypeSelect = document.getElementById('project_type');
+      const messageTextarea = document.getElementById('message');
+      
+      projectTypeSelect.addEventListener('change', () => {
+        const projectType = projectTypeSelect.value;
+        if (!projectType) return;
+        
+        // Generate auto-fill prompt based on project type
+        let prompt = '';
+        
+        switch (projectType) {
+          case 'Website':
+            prompt = `I'm interested in a website project. I'm looking for:
+- Type of website (e.g., portfolio, e-commerce, blog, corporate)
+- Design preferences (modern, minimalist, colorful, etc.)
+- Key features needed
+- Any specific functionality requirements
+- Target audience
+- Content management needs`;
+            break;
+          case 'Mobile App':
+            prompt = `I'm interested in a mobile app project. I'm looking for:
+- Platform (iOS, Android, or both)
+- App category (social, productivity, entertainment, etc.)
+- Core features and functionality
+- User authentication requirements
+- API integration needs
+- Monetization strategy`;
+            break;
+          case 'Branding / Marketing':
+            prompt = `I'm interested in branding/marketing services. I need:
+- Logo design concept
+- Brand identity guidelines
+- Marketing materials (brochures, flyers, etc.)
+- Social media presence
+- Brand strategy
+- Target market analysis`;
+            break;
+          case 'Other':
+            prompt = `I have a custom project that doesn't fit into standard categories. My requirements include:
+- Project description
+- Specific technical needs
+- Timeline expectations
+- Budget considerations
+- Any other relevant details`;
+            break;
+        }
+        
+        messageTextarea.value = prompt;
+      });
     })();
 
     // subtle parallax for decorative shapes & pebbles on pointer move (disabled on touch)
