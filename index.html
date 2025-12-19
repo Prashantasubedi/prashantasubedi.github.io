@@ -19,14 +19,38 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Google Analytics (gtag.js) - Using your Measurement ID -->
+  <!-- Enhanced Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-S30R3Z9MYJ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    
+    // Initialize with enhanced tracking
     gtag('js', new Date());
-
-    gtag('config', 'G-S30R3Z9MYJ');
+    
+    // Enhanced configuration with all features enabled
+    gtag('config', 'G-S30R3Z9MYJ', {
+      'anonymize_ip': false, // Set to true if you want to anonymize IPs for GDPR
+      'allow_google_signals': true,
+      'allow_ad_personalization_signals': true,
+      'send_page_view': true,
+      'custom_map': {
+        'custom_dimension_1': 'user_type',
+        'custom_dimension_2': 'interaction_type'
+      }
+    });
+    
+    // Enhanced ecommerce tracking
+    gtag('config', 'G-S30R3Z9MYJ', {
+      'currency': 'USD',
+      'enhanced_conversions': true
+    });
+    
+    // Track user engagement metrics
+    gtag('event', 'page_view', {
+      'page_title': document.title,
+      'page_location': window.location.href
+    });
   </script>
 
   <meta name="theme-color" content="#e9f2fb">
@@ -941,6 +965,21 @@
       border-top-color: rgba(255, 255, 255, 0.04);
     }
 
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     .social {
       display: flex;
       gap: 15px;
@@ -987,6 +1026,11 @@
 
     .social-link.email:hover {
       background: #ea4335;
+      color: white;
+    }
+
+    .social-link.privacy:hover {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: white;
     }
 
@@ -1655,6 +1699,128 @@
       margin-top: 20px;
     }
 
+    /* Cookie Consent Banner */
+    .cookie-consent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: var(--card);
+      color: var(--text);
+      padding: 20px;
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      border-top: 1px solid rgba(11, 18, 32, 0.1);
+    }
+
+    [data-theme="dark"] .cookie-consent {
+      border-top-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .cookie-consent.show {
+      transform: translateY(0);
+    }
+
+    .cookie-consent-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .cookie-consent-text {
+      flex: 1;
+    }
+
+    .cookie-consent-title {
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .cookie-consent-description {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .cookie-consent-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .cookie-consent-button {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .cookie-consent-accept {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+    }
+
+    .cookie-consent-decline {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(11, 18, 32, 0.1);
+    }
+
+    [data-theme="dark"] .cookie-consent-decline {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .cookie-consent-settings {
+      background: transparent;
+      color: var(--accent);
+      border: none;
+      text-decoration: underline;
+    }
+
+    /* Privacy Policy Section */
+    .privacy-policy {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .privacy-policy.active {
+      display: block;
+    }
+
+    .privacy-policy h1 {
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .privacy-policy h2 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .privacy-policy p {
+      margin-bottom: 1rem;
+      color: var(--muted);
+    }
+
+    .privacy-policy ul {
+      margin-bottom: 1rem;
+      padding-left: 2rem;
+      color: var(--muted);
+    }
+
+    .privacy-policy li {
+      margin-bottom: 0.5rem;
+    }
+
     /* Responsive adjustments */
     @media (max-width: 1200px) {
       .car-animation-container {
@@ -1686,6 +1852,16 @@
       
       .ai-modal-options {
         grid-template-columns: 1fr;
+      }
+      
+      .cookie-consent-container {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .cookie-consent-buttons {
+        width: 100%;
+        justify-content: center;
       }
     }
 
@@ -1933,30 +2109,40 @@
   </main>
 
   <footer>
-    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <div style="color:var(--muted)">© <strong>Prashanta Subedi</strong> — Built with care.</div>
-      <div class="social" aria-hidden="false">
-        <a href="https://github.com/prashantaasubedii" target="_blank" rel="noopener" aria-label="GitHub" class="social-link github">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 1.008-.322 3.301 1.236-3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
-        </a>
-        <a href="https://www.linkedin.com/in/prashanta-subedi-57425a39a/" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-link linkedin">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-          </svg>
-        </a>
-        <a href="https://instagram.com/prashantasubedi2" target="_blank" rel="noopener" aria-label="Instagram" class="social-link instagram">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.644.069 4.849 0 3.204-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
-          </svg>
-        </a>
-        <button class="mail-me-btn social-link email" type="button" aria-label="Email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2-2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
-        </button>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <div style="color:var(--muted)">© <strong>Prashanta Subedi</strong> — Built with care.</div>
+          <div class="social" aria-hidden="false">
+            <a href="https://github.com/prashantaasubedii" target="_blank" rel="noopener" aria-label="GitHub" class="social-link github">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 1.008-.322 3.301 1.236-3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/prashanta-subedi-57425a39a/" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-link linkedin">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+            <a href="https://instagram.com/prashantasubedi2" target="_blank" rel="noopener" aria-label="Instagram" class="social-link instagram">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.644.069 4.849 0 3.204-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
+              </svg>
+            </a>
+            <button class="mail-me-btn social-link email" type="button" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2-2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </button>
+            <button class="social-link privacy" id="privacyPolicyBtn" aria-label="Privacy Policy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 11 12 14 16 9"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
@@ -2094,6 +2280,65 @@
     </div>
   </div>
 
+  <!-- Cookie Consent Banner -->
+  <div class="cookie-consent" id="cookieConsent">
+    <div class="cookie-consent-container">
+      <div class="cookie-consent-text">
+        <div class="cookie-consent-title">Cookie Consent</div>
+        <div class="cookie-consent-description">We use cookies to enhance your experience, analyze site traffic, and personalize content. By continuing to use this site, you agree to our use of cookies.</div>
+      </div>
+      <div class="cookie-consent-buttons">
+        <button class="cookie-consent-button cookie-consent-accept" id="cookieAccept">Accept All</button>
+        <button class="cookie-consent-button cookie-consent-decline" id="cookieDecline">Essential Only</button>
+        <button class="cookie-consent-button cookie-consent-settings" id="cookieSettings">Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy Policy Section -->
+  <section id="privacy-policy" class="privacy-policy container">
+    <h1>Privacy Policy</h1>
+    <p>Last updated: [Current Date]</p>
+    
+    <h2>Information We Collect</h2>
+    <p>When you visit our website, we may collect certain information automatically, including:</p>
+    <ul>
+      <li>IP address and geolocation data</li>
+      <li>Browser type, operating system, and device information</li>
+      <li>Pages visited and time spent on each page</li>
+      <li>Referring website</li>
+      <li>Interaction data (clicks, form submissions, etc.)</li>
+    </ul>
+    
+    <h2>How We Use This Information</h2>
+    <p>We use collected information to:</p>
+    <ul>
+      <li>Analyze website traffic and user behavior</li>
+      <li>Improve our website and services</li>
+      <li>Respond to inquiries and service requests</li>
+      <li>Personalize content and user experience</li>
+    </ul>
+    
+    <h2>Google Analytics</h2>
+    <p>This website uses Google Analytics, a web analytics service provided by Google. Google Analytics uses cookies to collect information about how visitors use our website. This information is processed by Google to provide us with reports on website activity.</p>
+    
+    <h2>Your Rights</h2>
+    <p>You have right to:</p>
+    <ul>
+      <li>Know what personal data we collect</li>
+      <li>Request deletion of your personal data</li>
+      <li>Opt-out of data collection</li>
+      <li>Request a copy of your personal data</li>
+    </ul>
+    
+    <h2>Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, please contact us at: prashantaasubedii@gmail.com</p>
+    
+    <div style="margin-top:2rem;">
+      <button class="btn-primary" id="backToSite">Back to Site</button>
+    </div>
+  </section>
+
   <script>
     // Z.AI API Configuration
     const ZAI_API_KEY = 'f6838631099f422cba210f5189211295.M3f9Yt3Xvq31RHDh';
@@ -2210,6 +2455,14 @@
           sunIcon.style.display = 'block';
           moonIcon.style.display = 'none';
         }
+        
+        // Track theme change in Google Analytics
+        gtag('event', 'theme_change', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'theme_change',
+          'from_theme': theme,
+          'to_theme': newTheme
+        });
       });
     })();
 
@@ -2296,6 +2549,13 @@
         panel.setAttribute('aria-hidden', (!open).toString());
         btn.setAttribute('aria-expanded', open.toString());
         btn.textContent = open ? 'Hide Profile' : 'See Full Profile';
+        
+        // Track profile view in Google Analytics
+        gtag('event', 'profile_view', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'profile_view',
+          'action': open ? 'open' : 'close'
+        });
       });
     })();
 
@@ -2309,6 +2569,12 @@
           const user = 'prashantaasubedii';
           const domain = 'gmail.com';
           const email = user + '@' + domain;
+          
+          // Track email click in Google Analytics
+          gtag('event', 'email_click', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'email_click'
+          });
           
           // Create a mailto link and redirect
           window.location.href = 'mailto:' + email;
@@ -2330,6 +2596,13 @@
         const action = form.getAttribute('action') || '';
         const submitBtn = form.querySelector('button[type="submit"]');
         
+        // Track form submission start in Google Analytics
+        gtag('event', 'form_submit_start', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'form_submit',
+          'form_type': 'project_request'
+        });
+        
         // Show loading state
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
@@ -2345,12 +2618,33 @@
           });
           
           if (res.ok) {
+            // Track successful form submission in Google Analytics
+            gtag('event', 'form_submit_success', {
+              'custom_dimension_1': 'conversion',
+              'custom_dimension_2': 'form_submit',
+              'form_type': 'project_request'
+            });
+            
             showToast('Message sent — I will get back to you soon!', 'success');
             form.reset();
           } else {
+            // Track failed form submission in Google Analytics
+            gtag('event', 'form_submit_error', {
+              'custom_dimension_1': 'error',
+              'custom_dimension_2': 'form_submit',
+              'form_type': 'project_request'
+            });
+            
             showToast('There was an issue sending your message. Try again or email directly.', 'error');
           }
         } catch (err) {
+          // Track form submission exception in Google Analytics
+          gtag('event', 'form_submit_exception', {
+            'custom_dimension_1': 'error',
+            'custom_dimension_2': 'form_submit',
+            'form_type': 'project_request'
+          });
+          
           showToast('Network error — please try again later.', 'error');
         } finally {
           // Reset button state
@@ -2398,10 +2692,22 @@
       aiChatButton.addEventListener('click', () => {
         aiChatContainer.classList.add('active');
         aiChatInput.focus();
+        
+        // Track chat open in Google Analytics
+        gtag('event', 'chat_open', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'chat_interaction'
+        });
       });
       
       aiChatClose.addEventListener('click', () => {
         aiChatContainer.classList.remove('active');
+        
+        // Track chat close in Google Analytics
+        gtag('event', 'chat_close', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'chat_interaction'
+        });
       });
       
       // Input focus handling
@@ -2417,6 +2723,13 @@
       const sendMessage = async () => {
         const message = aiChatInput.value.trim();
         if (!message) return;
+        
+        // Track message sent in Google Analytics
+        gtag('event', 'chat_message_sent', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'chat_interaction',
+          'message_length': message.length
+        });
         
         // Add user message to chat
         addMessageToChat(message, 'user');
@@ -2456,12 +2769,32 @@
           if (data.choices && data.choices.length > 0) {
             const aiResponse = data.choices[0].message.content;
             addMessageToChat(aiResponse, 'bot');
+            
+            // Track AI response in Google Analytics
+            gtag('event', 'chat_ai_response', {
+              'custom_dimension_1': 'system_interaction',
+              'custom_dimension_2': 'chat_interaction',
+              'response_length': aiResponse.length
+            });
           } else {
             addMessageToChat('Sorry, I encountered an error. Please try again later.', 'bot');
+            
+            // Track AI error in Google Analytics
+            gtag('event', 'chat_ai_error', {
+              'custom_dimension_1': 'error',
+              'custom_dimension_2': 'chat_interaction'
+            });
           }
         } catch (error) {
           removeTypingIndicator();
           addMessageToChat('Sorry, I encountered an error. Please try again later.', 'bot');
+          
+          // Track API error in Google Analytics
+          gtag('event', 'chat_api_error', {
+            'custom_dimension_1': 'error',
+            'custom_dimension_2': 'chat_interaction'
+          });
+          
           console.error('AI API Error:', error);
         }
       };
@@ -2540,6 +2873,13 @@
         reader.onload = async (event) => {
           const base64Image = event.target.result.split(',')[1];
           
+          // Track image upload in Google Analytics
+          gtag('event', 'chat_image_upload', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'chat_interaction',
+            'file_size': file.size
+          });
+          
           // Add user message to chat
           addMessageToChat('Uploaded an image for analysis', 'user');
           
@@ -2587,12 +2927,32 @@
             if (data.choices && data.choices.length > 0) {
               const analysis = data.choices[0].message.content;
               addMessageToChat(analysis, 'bot');
+              
+              // Track image analysis in Google Analytics
+              gtag('event', 'chat_image_analysis', {
+                'custom_dimension_1': 'system_interaction',
+                'custom_dimension_2': 'chat_interaction',
+                'analysis_length': analysis.length
+              });
             } else {
               addMessageToChat('Sorry, I encountered an error analyzing the image. Please try again.', 'bot');
+              
+              // Track image analysis error in Google Analytics
+              gtag('event', 'chat_image_analysis_error', {
+                'custom_dimension_1': 'error',
+                'custom_dimension_2': 'chat_interaction'
+              });
             }
           } catch (error) {
             removeTypingIndicator();
             addMessageToChat('Sorry, I encountered an error analyzing the image. Please try again.', 'bot');
+            
+            // Track image analysis API error in Google Analytics
+            gtag('event', 'chat_image_analysis_api_error', {
+              'custom_dimension_1': 'error',
+              'custom_dimension_2': 'chat_interaction'
+            });
+            
             console.error('Image Analysis Error:', error);
           }
         };
@@ -2602,6 +2962,12 @@
       
       // Website analysis functionality
       websiteAnalysisBtn.addEventListener('click', () => {
+        // Track website analysis request in Google Analytics
+        gtag('event', 'chat_website_analysis_request', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'chat_interaction'
+        });
+        
         addMessageToChat('I want to analyze a website', 'user');
         
         // Show typing indicator
@@ -2615,6 +2981,12 @@
       
       // Project assistant functionality
       projectAssistantBtn.addEventListener('click', () => {
+        // Track project assistant open in Google Analytics
+        gtag('event', 'chat_project_assistant_open', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'chat_interaction'
+        });
+        
         // Open the AI Project Assistant modal
         document.getElementById('aiModal').classList.add('active');
       });
@@ -2634,10 +3006,22 @@
       // Close modal
       aiModalClose.addEventListener('click', () => {
         aiModal.classList.remove('active');
+        
+        // Track modal close in Google Analytics
+        gtag('event', 'project_assistant_modal_close', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'project_assistant'
+        });
       });
       
       aiModalCancel.addEventListener('click', () => {
         aiModal.classList.remove('active');
+        
+        // Track modal cancel in Google Analytics
+        gtag('event', 'project_assistant_modal_cancel', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'project_assistant'
+        });
       });
       
       // Select project type
@@ -2645,6 +3029,13 @@
         option.addEventListener('click', () => {
           projectTypeOptions.forEach(opt => opt.classList.remove('selected'));
           option.classList.add('selected');
+          
+          // Track project type selection in Google Analytics
+          gtag('event', 'project_type_selected', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'project_assistant',
+            'project_type': option.getAttribute('data-value')
+          });
         });
       });
       
@@ -2660,6 +3051,14 @@
           showToast('Please select a project type and provide details', 'error');
           return;
         }
+        
+        // Track project plan generation in Google Analytics
+        gtag('event', 'project_plan_generation', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'project_assistant',
+          'project_type': projectType,
+          'details_length': details.length
+        });
         
         // Show loading state
         aiModalGenerate.disabled = true;
@@ -2694,6 +3093,14 @@
           if (data.choices && data.choices.length > 0) {
             const projectDescription = data.choices[0].message.content;
             
+            // Track successful project plan generation in Google Analytics
+            gtag('event', 'project_plan_generation_success', {
+              'custom_dimension_1': 'conversion',
+              'custom_dimension_2': 'project_assistant',
+              'project_type': projectType,
+              'description_length': projectDescription.length
+            });
+            
             // Fill form with generated content
             document.getElementById('project_type').value = projectType;
             document.getElementById('message').value = projectDescription;
@@ -2711,9 +3118,23 @@
             // Show success message
             showToast('Project plan generated and added to your request form!', 'success');
           } else {
+            // Track project plan generation error in Google Analytics
+            gtag('event', 'project_plan_generation_error', {
+              'custom_dimension_1': 'error',
+              'custom_dimension_2': 'project_assistant',
+              'project_type': projectType
+            });
+            
             showToast('Sorry, I encountered an error generating the project plan. Please try again.', 'error');
           }
         } catch (error) {
+          // Track project plan generation API error in Google Analytics
+          gtag('event', 'project_plan_generation_api_error', {
+            'custom_dimension_1': 'error',
+            'custom_dimension_2': 'project_assistant',
+            'project_type': projectType
+          });
+          
           showToast('Sorry, I encountered an error generating the project plan. Please try again.', 'error');
           console.error('Project Plan Error:', error);
         } finally {
@@ -2732,6 +3153,13 @@
       projectTypeSelect.addEventListener('change', () => {
         const projectType = projectTypeSelect.value;
         if (!projectType) return;
+        
+        // Track project type selection in Google Analytics
+        gtag('event', 'project_type_selection', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'form_interaction',
+          'project_type': projectType
+        });
         
         // Generate auto-fill prompt based on project type
         let prompt = '';
@@ -2778,6 +3206,220 @@
       });
     })();
 
+    // Cookie Consent Banner
+    (function() {
+      const cookieConsent = document.getElementById('cookieConsent');
+      const cookieAccept = document.getElementById('cookieAccept');
+      const cookieDecline = document.getElementById('cookieDecline');
+      const cookieSettings = document.getElementById('cookieSettings');
+      
+      // Check if user has already made a choice
+      const cookieChoice = localStorage.getItem('cookieConsent');
+      
+      if (!cookieChoice) {
+        // Show cookie consent banner after a short delay
+        setTimeout(() => {
+          cookieConsent.classList.add('show');
+          
+          // Track cookie consent banner shown in Google Analytics
+          gtag('event', 'cookie_consent_shown', {
+            'custom_dimension_1': 'system_interaction',
+            'custom_dimension_2': 'privacy'
+          });
+        }, 1000);
+      } else if (cookieChoice === 'accepted') {
+        // Enable enhanced tracking if user previously accepted
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'analytics_storage': 'granted'
+        });
+      }
+      
+      // Handle accept button
+      cookieAccept.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'accepted');
+        cookieConsent.classList.remove('show');
+        
+        // Update Google Analytics consent
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'analytics_storage': 'granted'
+        });
+        
+        // Track cookie consent acceptance in Google Analytics
+        gtag('event', 'cookie_consent_accepted', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'privacy'
+        });
+      });
+      
+      // Handle decline button
+      cookieDecline.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'declined');
+        cookieConsent.classList.remove('show');
+        
+        // Update Google Analytics consent
+        gtag('consent', 'update', {
+          'ad_storage': 'denied',
+          'analytics_storage': 'denied'
+        });
+        
+        // Track cookie consent decline in Google Analytics
+        gtag('event', 'cookie_consent_declined', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'privacy'
+        });
+      });
+      
+      // Handle settings button
+      cookieSettings.addEventListener('click', () => {
+        // Show privacy policy section
+        document.getElementById('privacy-policy').classList.add('active');
+        document.getElementById('privacy-policy').scrollIntoView({
+          behavior: 'smooth'
+        });
+        
+        // Track cookie settings click in Google Analytics
+        gtag('event', 'cookie_settings_click', {
+          'custom_dimension_1': 'user_interaction',
+          'custom_dimension_2': 'privacy'
+        });
+      });
+    })();
+
+    // Privacy Policy Page
+    (function() {
+      const backToSiteBtn = document.getElementById('backToSite');
+      const privacyPolicyBtn = document.getElementById('privacyPolicyBtn');
+      
+      // Handle back to site button
+      if (backToSiteBtn) {
+        backToSiteBtn.addEventListener('click', () => {
+          document.getElementById('privacy-policy').classList.remove('active');
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
+      
+      // Handle privacy policy button
+      if (privacyPolicyBtn) {
+        privacyPolicyBtn.addEventListener('click', () => {
+          const privacyPolicy = document.getElementById('privacy-policy');
+          privacyPolicy.classList.add('active');
+          privacyPolicy.scrollIntoView({
+            behavior: 'smooth'
+          });
+          
+          // Track privacy policy view in Google Analytics
+          gtag('event', 'privacy_policy_view', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'privacy'
+          });
+        });
+      }
+    })();
+
+    // Enhanced Google Analytics tracking
+    (function() {
+      // Track page visibility changes
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          gtag('event', 'page_visible', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'engagement',
+            'page_title': document.title
+          });
+        } else {
+          gtag('event', 'page_hidden', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'engagement',
+            'page_title': document.title
+          });
+        }
+      });
+      
+      // Track scroll depth
+      let maxScrollPercentage = 0;
+      window.addEventListener('scroll', () => {
+        const scrollPercentage = Math.round(
+          (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+        );
+        
+        if (scrollPercentage > maxScrollPercentage) {
+          maxScrollPercentage = scrollPercentage;
+          
+          // Track scroll milestones
+          if (maxScrollPercentage === 25) {
+            gtag('event', 'scroll_25_percent', {
+              'custom_dimension_1': 'user_interaction',
+              'custom_dimension_2': 'engagement'
+            });
+          } else if (maxScrollPercentage === 50) {
+            gtag('event', 'scroll_50_percent', {
+              'custom_dimension_1': 'user_interaction',
+              'custom_dimension_2': 'engagement'
+            });
+          } else if (maxScrollPercentage === 75) {
+            gtag('event', 'scroll_75_percent', {
+              'custom_dimension_1': 'user_interaction',
+              'custom_dimension_2': 'engagement'
+            });
+          } else if (maxScrollPercentage === 90) {
+            gtag('event', 'scroll_90_percent', {
+              'custom_dimension_1': 'user_interaction',
+              'custom_dimension_2': 'engagement'
+            });
+          }
+        }
+      });
+      
+      // Track outbound links
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        if (href && href.includes('http') && !href.includes(window.location.hostname)) {
+          gtag('event', 'outbound_link', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'navigation',
+            'link_url': href
+          });
+        }
+      });
+      
+      // Track time on page
+      let timeOnPage = 0;
+      setInterval(() => {
+        timeOnPage += 5;
+        
+        // Track time on page milestones
+        if (timeOnPage === 30) {
+          gtag('event', 'time_on_page_30s', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'engagement'
+          });
+        } else if (timeOnPage === 60) {
+          gtag('event', 'time_on_page_1m', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'engagement'
+          });
+        } else if (timeOnPage === 180) {
+          gtag('event', 'time_on_page_3m', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'engagement'
+          });
+        } else if (timeOnPage === 300) {
+          gtag('event', 'time_on_page_5m', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'engagement'
+          });
+        }
+      }, 5000);
+    })();
+
     // subtle parallax for decorative shapes & pebbles on pointer move (disabled on touch)
     (function() {
       const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -2799,12 +3441,24 @@
     // Add smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        
+        // Skip if it's privacy policy link (handled separately)
+        if (href === '#privacy-policy') return;
+        
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.querySelector(href);
         if (target) {
           target.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
+          });
+          
+          // Track navigation in Google Analytics
+          gtag('event', 'navigation_click', {
+            'custom_dimension_1': 'user_interaction',
+            'custom_dimension_2': 'navigation',
+            'destination': href
           });
         }
       });
